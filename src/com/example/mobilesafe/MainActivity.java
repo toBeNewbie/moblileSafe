@@ -8,6 +8,10 @@ import android.view.MenuItem;
 
 public class MainActivity extends Activity {
 
+	
+	/**
+	 * 这个类是系统自己创建的
+	 */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
