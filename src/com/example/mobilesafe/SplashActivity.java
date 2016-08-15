@@ -1,6 +1,7 @@
 package com.example.mobilesafe;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -11,12 +12,10 @@ import java.net.URL;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.example.mobilesafe.activity.HomeActivity;
-import com.example.mobilesafe.bean.versionInfo;
-import com.example.mobilesafe.spUtils.myConstantValue;
-import com.example.mobilesafe.spUtils.splashUtils;
-
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -36,6 +35,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mobilesafe.activity.HomeActivity;
+import com.example.mobilesafe.bean.versionInfo;
+import com.example.mobilesafe.spUtils.myConstantValue;
+import com.example.mobilesafe.spUtils.splashUtils;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+
 /**
  * @author Administrator
  * @company Newbie
@@ -45,6 +53,7 @@ import android.widget.Toast;
 public class SplashActivity extends Activity {
 
 	private static final int LOAD_HOME_ACTIVITY = 1;
+	private static final int UPDATE_APK = 2;
 	private TextView splash_version_name;
 	private RelativeLayout rl_splash_root;
 	private String versionName;
@@ -60,9 +69,11 @@ public class SplashActivity extends Activity {
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case LOAD_HOME_ACTIVITY:
-				Toast.makeText(getApplicationContext(), "当前已经是最新版本", 0).show();
+				startHomeActivity();
 				break;
-
+			case UPDATE_APK:
+				showUpdateDialog();
+				break;
 			default:
 				switch (msg.what) {
 				case 404:
@@ -70,23 +81,29 @@ public class SplashActivity extends Activity {
 					break;
 				case 500:
 					Toast.makeText(getApplicationContext(), "服务器内部错误.....", 0).show();
+					break;
 				case 1010:
 					Toast.makeText(getApplicationContext(), "url 格式错误。。。。", 0).show();
+					break;
 				case 1011:
 					Toast.makeText(getApplicationContext(), "资源找不到。。。。", 0).show();
+					break;
 				case 1012:
 					Toast.makeText(getApplicationContext(), "io 异常错误。。。", 0).show();
+					break;
 				case 1013:
 					Toast.makeText(getApplicationContext(), "json 格式解析错误.......", 0).show();
-				default:
 					break;
+				 
 				}
+				startHomeActivity();
 				break;
 			}
 			
-			startHomeActivity();
+
 		};
 	};
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -236,7 +253,8 @@ public class SplashActivity extends Activity {
 					//获得消息，动画播放。
 					message.what=LOAD_HOME_ACTIVITY;
 				} else {
-
+					//有新版本。
+					message.what=UPDATE_APK;
 				}
 
 			}else {
@@ -271,7 +289,58 @@ public class SplashActivity extends Activity {
 
 	}
 
+	/**
+	 * 发现新版本，并弹出是否更新对话框，
+	 */
+	private void showUpdateDialog() {
+
+		AlertDialog.Builder builder;builder = new AlertDialog.Builder(this);
+		builder.setTitle("警告");
+		builder.setMessage("新版功能：\n"+version_info.getDesc());
+		builder.setPositiveButton("下载", new OnClickListener(){
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				//下载apk.
+				downloadApk();
+			}
+		}).setNegativeButton("取消", new OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				startHomeActivity();
+			}
+		});
+		builder.show();
+		
+	}
+
 	
+	
+	/**
+	 * 发现新版本，从服务器上下载相关Apk.
+	 */
+	protected void downloadApk() {
+		// TODO Auto-generated method stub
+		HttpUtils httpUtils = new HttpUtils();
+		httpUtils.download(version_info.getDownloadUrl(), getCacheDir().getAbsolutePath()+"/news.apk", new RequestCallBack<File>() {
+			
+			@Override
+			public void onSuccess(ResponseInfo<File> responseInfo) {
+				// TODO Auto-generated method stub
+
+				Toast.makeText(getApplicationContext(), "下载成功", 0).show();
+			}
+			
+			@Override
+			public void onFailure(HttpException error, String msg) {
+				// TODO Auto-generated method stub
+				Toast.makeText(getApplicationContext(), "下载失败。", 0).show();
+				startHomeActivity();
+			}
+		});
+	}
+
 	/**
 	 * 解析json格式的数据。
 	 * 
@@ -285,7 +354,7 @@ public class SplashActivity extends Activity {
 
 		version_info.setVersion_name(jsonObject.getString("version_name"));
 		version_info.setVersion_code(jsonObject.getInt("version_code"));
-		version_info.setDesc("desc");
+		version_info.setDesc(jsonObject.getString("desc"));
 		version_info.setDownloadUrl(jsonObject.getString("download_url"));
 
 	}
@@ -315,8 +384,8 @@ public class SplashActivity extends Activity {
 	public void startHomeActivity() {
 		Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
 		startActivity(intent);
-
+		
 		finish();
 	}
-
+ 
 }
