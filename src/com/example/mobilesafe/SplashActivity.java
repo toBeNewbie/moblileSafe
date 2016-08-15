@@ -3,14 +3,14 @@ package com.example.mobilesafe;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
+import android.view.Window;
 
 
 /**
  * @author Administrator
  *@company Newbie
  *@date 2016-8-15
- *@des 初始化Splash 界面。
+ *@des 初始化Splash界面。
  */
 public class SplashActivity extends Activity {
 
@@ -19,7 +19,8 @@ public class SplashActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.activity_splash);
     }
 
     @Override
