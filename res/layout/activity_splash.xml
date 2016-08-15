@@ -2,14 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/rl_splash_root"
+    android:background="@drawable/splash"
     tools:context="com.example.mobilesafe.MainActivity" >
-    
-    <ImageView 
-        android:scaleType="fitXY"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/splash"
-        />
+ 
     <TextView 
         android:layout_alignParentTop="true"
         android:layout_marginTop="90dp"
@@ -23,6 +19,7 @@
         />
     
     <TextView 
+        android:id="@+id/tv_splash_version_code"
         android:layout_below="@id/tv_splash_version_name"
         android:textColor="#ffffff"
         android:layout_marginTop="30dp"
