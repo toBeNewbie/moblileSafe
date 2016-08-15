@@ -1,9 +1,11 @@
 package com.example.mobilesafe;
 
+import com.example.mobilesafe.activity.HomeActivity;
 import com.example.mobilesafe.spUtils.myConstantValue;
 import com.example.mobilesafe.spUtils.splashUtils;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
@@ -39,11 +41,12 @@ public class SplashActivity extends Activity {
 		initView();
 		// 显示数据到界面。
 		initDate();
+		
+		// 设置动画
+		initAnimation();
 
 		initEvent();
 
-		// 设置动画
-		initAnimation();
 	}
 
 	private void initAnimation() {
@@ -127,7 +130,7 @@ public class SplashActivity extends Activity {
 					
 				} else {
 					//跳转到主界面
-
+					 startHomeActivity();
 				}
 			}
 		});
@@ -139,6 +142,16 @@ public class SplashActivity extends Activity {
 		//检测版本，
 		//安装新版本。
 		//跳转界面。
+	}
+	
+	/**
+	 * 跳转到主界面。
+	 */
+	public void startHomeActivity(){
+		Intent intent=new Intent(SplashActivity.this, HomeActivity.class);
+		startActivity(intent);
+		
+		finish();
 	}
 
 }
