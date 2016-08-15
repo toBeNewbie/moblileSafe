@@ -34,6 +34,7 @@ import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * @author Administrator
@@ -50,17 +51,40 @@ public class SplashActivity extends Activity {
 	private AnimationSet mAnimationSet;
 	private versionInfo version_info;
 	private int version_code;
+	private int responseCode;
 
+	/**
+	 * 消息处理，异常，错误处理。
+	 */
 	Handler handler =new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case LOAD_HOME_ACTIVITY:
-				startHomeActivity();
+				Toast.makeText(getApplicationContext(), "当前已经是最新版本", 0).show();
 				break;
 
 			default:
+				switch (msg.what) {
+				case 404:
+					Toast.makeText(getApplicationContext(), "网络连接错误！！", 0).show();
+					break;
+				case 500:
+					Toast.makeText(getApplicationContext(), "服务器内部错误.....", 0).show();
+				case 1010:
+					Toast.makeText(getApplicationContext(), "url 格式错误。。。。", 0).show();
+				case 1011:
+					Toast.makeText(getApplicationContext(), "资源找不到。。。。", 0).show();
+				case 1012:
+					Toast.makeText(getApplicationContext(), "io 异常错误。。。", 0).show();
+				case 1013:
+					Toast.makeText(getApplicationContext(), "json 格式解析错误.......", 0).show();
+				default:
+					break;
+				}
 				break;
 			}
+			
+			startHomeActivity();
 		};
 	};
 	
@@ -194,7 +218,7 @@ public class SplashActivity extends Activity {
 	protected void readDataFromUrl() {
 		// TODO Auto-generated method stub
 
-		Message message=null;
+		Message message=handler.obtainMessage();
 		long startTime = System.currentTimeMillis();
 		try {
 			URL url = new URL(getResources().getString(R.string.download_url));
@@ -202,31 +226,38 @@ public class SplashActivity extends Activity {
 			conn.setConnectTimeout(5000);
 			conn.setRequestMethod("GET");
 
-			if (conn.getResponseCode() == 200) {
+			responseCode = conn.getResponseCode();
+			if (responseCode == 200) {
 
 				String jsonContent = readData(conn.getInputStream());
 				parseJsonData(jsonContent);
 
 				if (version_code == version_info.getVersion_code()) {
 					//获得消息，动画播放。
-					message = handler.obtainMessage(LOAD_HOME_ACTIVITY);
+					message.what=LOAD_HOME_ACTIVITY;
 				} else {
 
 				}
 
+			}else {
+				message.what=responseCode;
 			}
 
 		} catch (MalformedURLException e) {
 			// URL格式错误。
+			message.what=1010;
 			e.printStackTrace();
 		} catch (NotFoundException e) {
 			// 找不到地址错误。
+			message.what=1011;
 			e.printStackTrace();
 		} catch (IOException e) {
 			// io异常错误。
+			message.what=1012;
 			e.printStackTrace();
 		} catch (JSONException e) {
 			// 解析json数据格式出错
+			message.what=1013;
 			e.printStackTrace();
 		} finally{
 			long endTime = System.currentTimeMillis();
