@@ -4,12 +4,61 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-
-    <TextView 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="主界面"
-        android:textSize="30sp"
-        />
+ <RelativeLayout 
+     android:layout_width="match_parent"
+     android:layout_height="100dip"
+     android:background="@drawable/title_bkg"
+     >
+     
+     <ImageView 
+         android:id="@+id/logo"
+         android:layout_centerVertical="true"
+         android:layout_marginLeft="10dp"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:src="@drawable/logo"
+         />
+     
+     <LinearLayout 
+         android:paddingLeft="10dp"
+         android:layout_toRightOf="@id/logo"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:orientation="vertical"
+         android:layout_marginTop="30dp"
+         >
+         <TextView 
+             android:id="@+id/title"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="魔法革时刻关心你"
+             android:textSize="18sp"
+             />
+         
+         <TextView 
+             android:paddingTop="5dp"
+             android:textColor="#ff0000"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="我忽略时刻，正因等你出现；我忽略距离，正因等你出现；我忽略语言，正因想你一向未变。亲爱的，想你了。"
+             android:singleLine="true"
+             />
+     </LinearLayout>
+     
+     <ImageView
+         android:layout_width="30dp"
+         android:layout_height="30dp"
+         android:layout_above="@+id/logo"
+         android:layout_alignParentRight="true"
+         android:layout_alignParentTop="true"
+         android:src="@drawable/setting" />
+     
+ </RelativeLayout>
+ 
+ <GridView 
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:numColumns="2"
+     ></GridView>
     
 </LinearLayout>
