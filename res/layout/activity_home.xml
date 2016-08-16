@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:background="@drawable/home_bkg">
     
  <RelativeLayout 
      android:layout_width="match_parent"
@@ -58,6 +59,9 @@
  </RelativeLayout>
  
  <GridView 
+     android:layout_marginTop="30dp"
+     android:horizontalSpacing="10dip"
+     android:verticalSpacing="10dp"
      android:id="@+id/gv_home_tools"
      android:layout_width="match_parent"
      android:layout_height="match_parent"
