@@ -12,6 +12,7 @@ import java.net.URL;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.R.anim;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -20,7 +21,9 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources.NotFoundException;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
@@ -322,23 +325,36 @@ public class SplashActivity extends Activity {
 	 */
 	protected void downloadApk() {
 		// TODO Auto-generated method stub
+		String path = Environment.getExternalStorageDirectory()+"/news.apk";
 		HttpUtils httpUtils = new HttpUtils();
-		httpUtils.download(version_info.getDownloadUrl(), getCacheDir().getAbsolutePath()+"/news.apk", new RequestCallBack<File>() {
+		httpUtils.download(version_info.getDownloadUrl(), path, new RequestCallBack<File>() {
 			
 			@Override
 			public void onSuccess(ResponseInfo<File> responseInfo) {
 				// TODO Auto-generated method stub
 
-				Toast.makeText(getApplicationContext(), "下载成功", 0).show();
+				 installApk();
 			}
 			
 			@Override
 			public void onFailure(HttpException error, String msg) {
 				// TODO Auto-generated method stub
-				Toast.makeText(getApplicationContext(), "下载失败。", 0).show();
+				Toast.makeText(getApplicationContext(), "下载失败"+msg, 0).show();
 				startHomeActivity();
 			}
 		});
+	}
+
+	/**
+	 * 安装下载好的Apk。
+	 */
+	protected void installApk() {
+	 
+		String fileName = Environment.getExternalStorageDirectory()+"/news.apk";
+		Intent intent = new Intent("android.intent.action.VIEW");
+		intent.addCategory("android.intent.category.DEFAULT");
+		intent.setDataAndType(Uri.fromFile(new File(fileName)), "application/vnd.android.package-archive");
+		startActivity(intent);
 	}
 
 	/**
