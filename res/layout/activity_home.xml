@@ -35,8 +35,8 @@
              android:textSize="18sp"
              />
          
-         <TextView 
-             
+         <com.example.mobilesafe.difineView.FocusTextView 
+             android:ellipsize="marquee"
              android:paddingTop="5dp"
              android:textColor="#ff0000"
              android:layout_width="wrap_content"
