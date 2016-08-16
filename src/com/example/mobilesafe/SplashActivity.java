@@ -92,12 +92,13 @@ public class SplashActivity extends Activity {
 					Toast.makeText(getApplicationContext(), "资源找不到。。。。", 0).show();
 					break;
 				case 1012:
-					Toast.makeText(getApplicationContext(), "io 异常错误。。。", 0).show();
+					Toast.makeText(getApplicationContext(), "网络不可用，请连接网络", 0).show();
 					break;
 				case 1013:
 					Toast.makeText(getApplicationContext(), "json 格式解析错误.......", 0).show();
 					break;
-				 
+				 default:
+					break;
 				}
 				startHomeActivity();
 				break;
