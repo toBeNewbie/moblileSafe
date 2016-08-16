@@ -36,6 +36,7 @@
              />
          
          <TextView 
+             
              android:paddingTop="5dp"
              android:textColor="#ff0000"
              android:layout_width="wrap_content"
@@ -46,6 +47,7 @@
      </LinearLayout>
      
      <ImageView
+         android:id="@+id/setting"
          android:layout_width="30dp"
          android:layout_height="30dp"
          android:layout_above="@+id/logo"
@@ -56,6 +58,7 @@
  </RelativeLayout>
  
  <GridView 
+     android:id="@+id/gv_home_tools"
      android:layout_width="match_parent"
      android:layout_height="match_parent"
      android:numColumns="2"
