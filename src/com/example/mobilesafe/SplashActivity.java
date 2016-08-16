@@ -354,7 +354,7 @@ public class SplashActivity extends Activity {
 		Intent intent = new Intent("android.intent.action.VIEW");
 		intent.addCategory("android.intent.category.DEFAULT");
 		intent.setDataAndType(Uri.fromFile(new File(fileName)), "application/vnd.android.package-archive");
-		startActivity(intent);
+		startActivityForResult(intent, 1);
 	}
 
 	/**
@@ -402,6 +402,17 @@ public class SplashActivity extends Activity {
 		startActivity(intent);
 		
 		finish();
+	}
+	
+	
+	/**
+	 * 监控安装过程中取消操作。
+	 */
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		startHomeActivity();
+		super.onActivityResult(requestCode, resultCode, data);
 	}
  
 }
