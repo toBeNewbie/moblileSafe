@@ -26,6 +26,7 @@ import com.example.mobilesafe.R;
 import com.example.mobilesafe.bean.homeToolsBean;
 import com.example.mobilesafe.spUtils.myConstantValue;
 import com.example.mobilesafe.spUtils.splashUtils;
+import com.example.mobilesafe.utils.MD5utils;
 import com.nineoldandroids.animation.ObjectAnimator;
 
 public class HomeActivity extends Activity {
@@ -288,7 +289,7 @@ public class HomeActivity extends Activity {
 					if (!isPassword) {
 
 						//设置密码
-						if (ed_input_password.getText().toString().trim().equals(splashUtils.getString(getApplicationContext(), myConstantValue.PASSWORD, ""))) {
+						if (MD5utils.MD5(ed_input_password.getText().toString().trim()).equals(splashUtils.getString(getApplicationContext(), myConstantValue.PASSWORD, ""))) {
 							
 							//密码设置成功，跳转到手机防盗界面。
 							Toast.makeText(getApplicationContext(), "跳转到手机防盗界面", 0).show();
@@ -307,10 +308,11 @@ public class HomeActivity extends Activity {
 								.trim()
 								.equals(ed_input_password.getText().toString()
 										.trim())) {
-							// 密码相同
+							// 密码相同,md5加密。
 							splashUtils.putString(getApplicationContext(),
 									myConstantValue.PASSWORD,
-									ed_confirm_password.getText().toString());
+									MD5utils.MD5(ed_confirm_password.getText().toString())
+									);
 							Toast.makeText(getApplicationContext(),
 									"密码设置成功！！！", 0).show();
 

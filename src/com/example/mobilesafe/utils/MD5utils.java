@@ -26,6 +26,7 @@ public class MD5utils {
 		try {
 			MessageDigest digest = MessageDigest.getInstance("MD5");
 			
+			//获得密文
 			byte[] encryption = digest.digest(str.getBytes());
 			for (byte b : encryption) {
 				int number=b&0xff;
