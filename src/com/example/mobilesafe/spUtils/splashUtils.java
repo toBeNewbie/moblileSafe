@@ -24,9 +24,16 @@ public class splashUtils {
 		return sharedPreferences.getBoolean(key, defValue);
 	}
 
-
-	 
-
- 
+	public static void putString(Context context,String key, String value){
+		SharedPreferences sharedPreferences = context.getSharedPreferences(myConstantValue.SPL_FILE_CONFIGUE_NAME, Context.MODE_PRIVATE);
+		sharedPreferences.edit().putString(key, value).commit();
+		}
 	
+	
+	public static String getString(Context context,String key, String defValue){
+		SharedPreferences sharedPreferences = context.getSharedPreferences(myConstantValue.SPL_FILE_CONFIGUE_NAME, Context.MODE_PRIVATE);
+		return sharedPreferences.getString(key, defValue);
+	}
+	
+
 }
