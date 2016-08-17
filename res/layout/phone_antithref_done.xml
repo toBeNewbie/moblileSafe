@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <TextView 
+        style="@style/title_style"
+        android:text="手机防盗"
+        />
+
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <TextView 
+            android:clickable="true"
+            android:background="@drawable/dialog_set_password_selector"
+            android:gravity="center_vertical"
+			android:paddingLeft="10dp"
+			android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="手机防盗是否开启"
+            />
+        
+        <ImageView 
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/lock"
+            />
+    </RelativeLayout>
+    
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <TextView 
+            android:clickable="true"
+            android:background="@drawable/dialog_set_password_selector"
+            android:gravity="center_vertical"
+			android:paddingLeft="10dp"
+			android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="重新进入设置向导界面"
+            />
+        
+       
+    </RelativeLayout>
+    
+    
+     <TextView 
+  		style="@style/anti_thref_item"
+        android:text="Sim卡变更报警"
+        />
+    
+     
+    <TextView 
+  		style="@style/anti_thref_item"
+        android:text="GPS追踪#*gps*#"
+        />
+    
+     
+    <TextView 
+  		style="@style/anti_thref_item"
+        android:text="远程锁屏#*lockscreen*#"
+        />
+    
+     
+    <TextView 
+  		style="@style/anti_thref_item"
+        android:text="数据销毁#*wipedata*#"
+        />
+    
+    <TextView 
+  		style="@style/anti_thref_item"
+        android:text="播放报警音乐#*music*#"
+        />
+</LinearLayout>
