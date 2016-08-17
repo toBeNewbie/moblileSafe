@@ -12,4 +12,5 @@ public interface myConstantValue {
 	String SPL_FILE_CONFIGUE_NAME = "configure";
 	String AUTO_VERSION_UPDATE = "auto_update";
 	String PASSWORD = "password";
+	String dISPLAY_SETTING = "display_setting";
 }

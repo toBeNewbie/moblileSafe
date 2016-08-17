@@ -15,6 +15,33 @@
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:windowNoTitle">true</item>
+    </style>
+  
+        
+    <style name="title_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:background">@drawable/title_bkg</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+    
+    
+    <!--       android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+		android:drawablePadding="10dp"
+		android:textSize="15sp"
+        android:drawableLeft="@drawable/dialog_title_default_icon" -->
+        
+    <style name="anti_thref_item">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:drawableLeft">@drawable/dialog_title_default_icon</item>
     </style>
 
 </resources>

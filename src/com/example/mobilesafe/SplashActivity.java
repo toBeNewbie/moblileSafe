@@ -12,10 +12,10 @@ import java.net.URL;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.R.anim;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -298,7 +298,9 @@ public class SplashActivity extends Activity {
 	 */
 	private void showUpdateDialog() {
 
-		AlertDialog.Builder builder;builder = new AlertDialog.Builder(this);
+		AlertDialog.Builder builder;
+		builder = new AlertDialog.Builder(this);
+		
 		builder.setTitle("警告");
 		builder.setMessage("新版功能：\n"+version_info.getDesc());
 		builder.setPositiveButton("下载", new OnClickListener(){
@@ -312,6 +314,15 @@ public class SplashActivity extends Activity {
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
+				startHomeActivity();
+			}
+		});
+		builder.setOnCancelListener(new OnCancelListener() {
+			
+			@Override
+			public void onCancel(DialogInterface dialog) {
+				// TODO Auto-generated method stub
+				
 				startHomeActivity();
 			}
 		});

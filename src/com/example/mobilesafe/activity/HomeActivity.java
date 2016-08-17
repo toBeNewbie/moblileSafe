@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -292,8 +293,10 @@ public class HomeActivity extends Activity {
 						if (MD5utils.MD5(ed_input_password.getText().toString().trim()).equals(splashUtils.getString(getApplicationContext(), myConstantValue.PASSWORD, ""))) {
 							
 							//密码设置成功，跳转到手机防盗界面。
-							Toast.makeText(getApplicationContext(), "跳转到手机防盗界面", 0).show();
-							
+
+							Intent intent=new Intent(HomeActivity.this, PhoneAntiTheft.class);
+							startActivity(intent);
+							dialog.dismiss();
 						}else {
 							//输入密码错误。
 							Toast.makeText(getApplicationContext(),

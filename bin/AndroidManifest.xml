@@ -28,6 +28,14 @@
         <activity 
             android:name="com.example.mobilesafe.activity.HomeActivity"
             ></activity>
+        <activity android:name="com.example.mobilesafe.activity.PhoneAntiThrefSetOne"></activity>
+        
+        <activity android:name="com.example.mobilesafe.activity.PhoneAntiThrefSetTwo"></activity>
+        
+        <activity android:name="com.example.mobilesafe.activity.PhoneAntiThrefSetThree"></activity>
+        
+        <activity android:name="com.example.mobilesafe.activity.PhoneAntiThrefSetFour"></activity>
+        <activity android:name="com.example.mobilesafe.activity.PhoneAntiTheft"></activity>
     </application>
 
 </manifest>
