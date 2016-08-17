@@ -83,6 +83,7 @@
             />
         
          <Button 
+             android:onClick="nextAntiThrefPage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="下一步"

@@ -1,5 +1,6 @@
 package com.example.mobilesafe.activity;
 
+import com.example.mobilesafe.R;
 import com.example.mobilesafe.spUtils.myConstantValue;
 import com.example.mobilesafe.spUtils.splashUtils;
 
@@ -36,6 +37,7 @@ public class PhoneAntiTheft extends Activity {
 
 	private void initView() {
 		// TODO Auto-generated method stub
+		setContentView(R.layout.phone_antithref_done);
 		
 	}
 

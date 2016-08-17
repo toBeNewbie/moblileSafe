@@ -2,21 +2,19 @@ package com.example.mobilesafe.activity;
 
 import com.example.mobilesafe.R;
 
-import android.app.Activity;
-import android.os.Bundle;
+public class PhoneAntiThrefSetOne extends PhoneAntiThrefBaseActivity {
 
-public class PhoneAntiThrefSetOne extends Activity {
-	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void initView() {
 		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);
-		
-		initView();
-	}
 
-	private void initView() {
-		// TODO Auto-generated method stub
 		setContentView(R.layout.phone_antithref_guidseting_01);
 	}
+
+	@Override
+	protected void startNext() {
+		// TODO Auto-generated method stub
+		startPageType(PhoneAntiThrefSetTwo.class);
+	}
+
 }
