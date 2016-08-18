@@ -1,5 +1,7 @@
 package com.example.mobilesafe.activity;
 
+import com.example.mobilesafe.R;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,6 +36,7 @@ public abstract class PhoneAntiThrefBaseActivity extends Activity {
 	}
 	
 	protected abstract void startNext();
+	protected abstract void startPre();
 	/**
 	 * 跳转到下一个页面。
 	 * @param view
@@ -46,12 +49,26 @@ public abstract class PhoneAntiThrefBaseActivity extends Activity {
 		nextPageAnimation();
 	}
 	
+	
+    public void preAntiThrefPage(View view){
+    	startPre();
+    	
+    	prePageAnimation();
+    }
+	
+	
+    /**
+     * 跳转到上一页面的动画。
+     */
+    public void prePageAnimation(){
+    	overridePendingTransition(R.anim.pre_enter_animation, R.anim.pre_exit_animation);
+    }
+    
 	/**
 	 * 跳转页面时的动画。
 	 */
 	private void nextPageAnimation() {
-		// TODO Auto-generated method stub
-		
+		overridePendingTransition(R.anim.next_enter_animation, R.anim.next_exit_animation);
 	}
 
 	/**

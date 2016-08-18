@@ -17,4 +17,9 @@ public class PhoneAntiThrefSetOne extends PhoneAntiThrefBaseActivity {
 		startPageType(PhoneAntiThrefSetTwo.class);
 	}
 
+	@Override
+	protected void startPre() {
+		// TODO Auto-generated method stub
+	}
+
 }

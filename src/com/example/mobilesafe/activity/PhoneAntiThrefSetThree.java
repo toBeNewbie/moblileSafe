@@ -15,4 +15,10 @@ public class PhoneAntiThrefSetThree extends PhoneAntiThrefBaseActivity {
 		// TODO Auto-generated method stub
 		startPageType(PhoneAntiThrefSetFour.class);
 	}
+
+	@Override
+	protected void startPre() {
+		// TODO Auto-generated method stub
+		startPageType(PhoneAntiThrefSetTwo.class);
+	}
 }
