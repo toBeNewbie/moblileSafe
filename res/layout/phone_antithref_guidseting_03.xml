@@ -18,6 +18,8 @@
         />
     
     <EditText 
+        android:inputType="phone|number"
+        android:id="@+id/et_anti_thref_phone_number"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,6 +27,7 @@
         />
     
     <Button 
+        android:onClick="selectContacts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="点击绑定、解绑Sim卡"

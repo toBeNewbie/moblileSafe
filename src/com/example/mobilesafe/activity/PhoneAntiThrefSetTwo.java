@@ -87,11 +87,3 @@ public class PhoneAntiThrefSetTwo extends PhoneAntiThrefBaseActivity {
 
 
 
-
-
-
-
-
-
-
-

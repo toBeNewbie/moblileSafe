@@ -14,4 +14,5 @@ public interface myConstantValue {
 	String PASSWORD = "password";
 	String dISPLAY_SETTING = "display_setting";
 	String SIM_NUMBER="sim_number";
+	String MOBILE_SAFE_NUMBER = "mobile_safe_number";
 }

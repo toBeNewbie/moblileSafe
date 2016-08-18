@@ -12,11 +12,20 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
+    <instrumentation 
+        android:name="android.test.InstrumentationTestRunner"
+        android:targetPackage="com.example.mobilesafe"
+        ></instrumentation>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    
+    
     <application
+       
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <uses-library android:name="android.test.runner"/>
         <activity
             android:name=".SplashActivity"
             android:label="@string/app_name" >
@@ -37,6 +46,8 @@
         
         <activity android:name="com.example.mobilesafe.activity.PhoneAntiThrefSetFour"></activity>
         <activity android:name="com.example.mobilesafe.activity.PhoneAntiTheft"></activity>
+        
+        <activity android:name="com.example.mobilesafe.activity.ContactList"></activity>
     </application>
 
 </manifest>
