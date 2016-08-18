@@ -13,4 +13,5 @@ public interface myConstantValue {
 	String AUTO_VERSION_UPDATE = "auto_update";
 	String PASSWORD = "password";
 	String dISPLAY_SETTING = "display_setting";
+	String SIM_NUMBER="sim_number";
 }
