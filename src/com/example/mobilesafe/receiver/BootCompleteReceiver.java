@@ -28,7 +28,7 @@ public class BootCompleteReceiver extends BroadcastReceiver {
 		TelephonyManager telephony = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 		String phoneNumber = telephony.getSimSerialNumber();
 		
-		if (phoneNumber.equals(splashUtils.getString(context, myConstantValue.SIM_NUMBER, ""))) {
+		if (!phoneNumber.equals(splashUtils.getString(context, myConstantValue.SIM_NUMBER, ""))) {
 		
 			android.telephony.SmsManager smsManager = android.telephony.SmsManager.getDefault();
 			smsManager.sendTextMessage(splashUtils.getString(context, myConstantValue.MOBILE_SAFE_NUMBER, "110"), null, "I am thref who you want to meet!!!", null, null);
