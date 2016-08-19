@@ -5,11 +5,14 @@ import java.util.List;
 
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -17,6 +20,7 @@ import android.widget.TextView;
 import com.example.mobilesafe.R;
 import com.example.mobilesafe.bean.ContactBean;
 import com.example.mobilesafe.dao.ReadContact;
+import com.example.mobilesafe.spUtils.myConstantValue;
 
 
 /**
@@ -43,6 +47,27 @@ public class ContactList extends ListActivity {
 	 
 		//加载数据。
 		initData();
+		
+		initEvent();
+	}
+
+	/**
+	 * 获取数据，传递数据到上一个界面。
+	 */
+	private void initEvent() {
+		 listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				ContactBean contac = (ContactBean) listView.getItemAtPosition((int) listView.getItemIdAtPosition(position));
+				Intent intent=new Intent();
+				intent.putExtra(myConstantValue.MOBILE_SAFE_NUMBER, contac.getPhoneNumber());
+				setResult(1, intent);
+				finish();
+			}
+		});
 	}
 
 	Handler mHandler=new Handler(){
@@ -51,6 +76,7 @@ public class ContactList extends ListActivity {
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case 1:
+				listView.setVisibility(View.GONE);
 				dialog = new ProgressDialog(ContactList.this);
 				dialog.setTitle("警告");
 				dialog.setMessage("魔法革正在玩命加载数据中。。。。");
@@ -59,6 +85,7 @@ public class ContactList extends ListActivity {
 			case 2:
 				dialog.dismiss();
 				adapter.notifyDataSetChanged();
+				listView.setVisibility(View.VISIBLE);
 				break;
 			default:
 				break;
@@ -80,7 +107,7 @@ public class ContactList extends ListActivity {
 				
 				//加载数据完成。
 				contactBeans=(ArrayList<ContactBean>) ReadContact.readContacts(getApplicationContext());
-				SystemClock.sleep(3000);
+				SystemClock.sleep(1000);
 				mHandler.obtainMessage(DONE).sendToTarget();
 				
 			}
@@ -107,13 +134,13 @@ public class ContactList extends ListActivity {
 		@Override
 		public Object getItem(int position) {
 			// TODO Auto-generated method stub
-			return null;
+			return contactBeans.get(position);
 		}
 
 		@Override
 		public long getItemId(int position) {
 			// TODO Auto-generated method stub
-			return 0;
+			return position;
 		}
 
 		@Override
@@ -132,7 +159,7 @@ public class ContactList extends ListActivity {
 				holder=(ViewHolder) convertView.getTag();
 			}
 			
-			ContactBean contactBean = contactBeans.get(position);
+			ContactBean contactBean = (ContactBean) getItem(position);
 			
 			//给界面设置联系人数据。
 			holder.tv_contact_name.setText(contactBean.getContactName());

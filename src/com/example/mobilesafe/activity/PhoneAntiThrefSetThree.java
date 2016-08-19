@@ -75,8 +75,13 @@ public class PhoneAntiThrefSetThree extends PhoneAntiThrefBaseActivity {
 	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-		super.onActivityResult(requestCode, resultCode, data);
+
+		if (data!=null) {
+			
+			String safeNumber = data.getStringExtra(myConstantValue.MOBILE_SAFE_NUMBER);
+			anti_phone_number.setText(safeNumber);
+			super.onActivityResult(requestCode, resultCode, data);
+		}
 	}
 	 
 }
