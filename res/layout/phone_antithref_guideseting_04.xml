@@ -9,11 +9,13 @@
         android:text="4.魔法革提醒你设置完成" />
 
     <CheckBox
+        android:id="@+id/cb_on_antithref"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="打开开启防盗保护" />
 
     <TextView
+        android:id="@+id/tv_anti_thref"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"

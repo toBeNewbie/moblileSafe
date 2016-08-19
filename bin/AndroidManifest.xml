@@ -48,6 +48,8 @@
         <activity android:name="com.example.mobilesafe.activity.PhoneAntiTheft"></activity>
         
         <activity android:name="com.example.mobilesafe.activity.ContactList"></activity>
+        
+        <service android:name="com.example.mobilesafe.service.AntiThrefService"></service>
     </application>
 
 </manifest>
