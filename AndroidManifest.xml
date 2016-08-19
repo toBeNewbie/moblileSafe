@@ -17,6 +17,8 @@
         android:targetPackage="com.example.mobilesafe"
         ></instrumentation>
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     
     
     <application
@@ -50,6 +52,12 @@
         <activity android:name="com.example.mobilesafe.activity.ContactList"></activity>
         
         <service android:name="com.example.mobilesafe.service.AntiThrefService"></service>
+        
+        <receiver android:name="com.example.mobilesafe.receiver.BootCompleteReceiver">
+            <intent-filter >
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

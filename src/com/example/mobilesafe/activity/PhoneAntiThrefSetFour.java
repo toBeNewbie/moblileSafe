@@ -43,7 +43,7 @@ public class PhoneAntiThrefSetFour extends PhoneAntiThrefBaseActivity {
 				splashUtils.putBoolean(getApplicationContext(), myConstantValue.dISPLAY_SETTING, isChecked);
 				if (isChecked) {
 					tv_anti_thref.setText("防盗服务已经开启");
-					
+
 					//启动服务。
 					intent = new Intent(PhoneAntiThrefSetFour.this, AntiThrefService.class);
 					startService(intent);
@@ -81,8 +81,9 @@ public class PhoneAntiThrefSetFour extends PhoneAntiThrefBaseActivity {
 	public void startNext() {
 		
 		if (splashUtils.getbBoolean(getApplicationContext(), myConstantValue.dISPLAY_SETTING, false)) {
-			
 			startPageType(PhoneAntiTheft.class);
+			splashUtils.putBoolean(getApplicationContext(), myConstantValue.BOOT_COMPLETE,true);
+
 		}else {
 			ShowToastUtils.showToast("必须开启防盗保护", this);
 		}
