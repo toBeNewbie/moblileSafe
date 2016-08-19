@@ -7,6 +7,8 @@ import com.example.mobilesafe.spUtils.splashUtils;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 /**
  * 
@@ -17,6 +19,8 @@ import android.os.Bundle;
  */
 public class PhoneAntiTheft extends Activity {
 
+	private TextView tvSafeNumber;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -26,20 +30,46 @@ public class PhoneAntiTheft extends Activity {
 			
 			//设置向导完成。
 			initView();
+			
+			initData();
+			
+			initEvent();
 		}else{
 			//设置向导未完成。
 			Intent intent = new Intent(PhoneAntiTheft.this, PhoneAntiThrefSetOne.class);
 			startActivity(intent);
 			finish();
 		}
+		
+		
 		 
+	}
+
+	private void initEvent() {
+		
+		
+	}
+
+	 public void to_antithref_guide01(View view){
+		Intent intent = new Intent(this,PhoneAntiThrefSetOne.class );
+		startActivity(intent);
+		finish();
+	}
+	
+	private void initData() {
+		
+		tvSafeNumber.setText(splashUtils.getString(getApplicationContext(), myConstantValue.MOBILE_SAFE_NUMBER, ""));
+		
 	}
 
 	private void initView() {
 		// TODO Auto-generated method stub
 		setContentView(R.layout.phone_antithref_done);
-		
+		tvSafeNumber = (TextView) findViewById(R.id.tv_safe_number);
 	}
+	
+	
+	
 
 	 
 }

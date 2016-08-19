@@ -69,12 +69,12 @@
             android:text="上一步" />
 
         <Button
+            android:onClick="nextAntiThrefPage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:background="@drawable/dialog_set_password_selector"
-            android:onClick="nextAntiThrefPage"
             android:text="设置完成" />
     </RelativeLayout>
 

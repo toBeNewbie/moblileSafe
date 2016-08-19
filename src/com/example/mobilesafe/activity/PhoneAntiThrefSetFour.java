@@ -8,7 +8,10 @@ import android.widget.TextView;
 
 import com.example.mobilesafe.R;
 import com.example.mobilesafe.service.AntiThrefService;
+import com.example.mobilesafe.spUtils.myConstantValue;
+import com.example.mobilesafe.spUtils.splashUtils;
 import com.example.mobilesafe.utils.AntiThrefServiceUtils;
+import com.example.mobilesafe.utils.ShowToastUtils;
 
 
 public class PhoneAntiThrefSetFour extends PhoneAntiThrefBaseActivity {
@@ -37,12 +40,14 @@ public class PhoneAntiThrefSetFour extends PhoneAntiThrefBaseActivity {
 
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				splashUtils.putBoolean(getApplicationContext(), myConstantValue.dISPLAY_SETTING, isChecked);
 				if (isChecked) {
 					tv_anti_thref.setText("防盗服务已经开启");
 					
 					//启动服务。
 					intent = new Intent(PhoneAntiThrefSetFour.this, AntiThrefService.class);
 					startService(intent);
+					
 					
 				}else {
 					tv_anti_thref.setText("防盗服务已经关闭");
@@ -74,8 +79,13 @@ public class PhoneAntiThrefSetFour extends PhoneAntiThrefBaseActivity {
 	@Override
 	
 	public void startNext() {
-		// TODO Auto-generated method stub
-		startPageType(PhoneAntiTheft.class);
+		
+		if (splashUtils.getbBoolean(getApplicationContext(), myConstantValue.dISPLAY_SETTING, false)) {
+			
+			startPageType(PhoneAntiTheft.class);
+		}else {
+			ShowToastUtils.showToast("必须开启防盗保护", this);
+		}
 	}
 
 	

@@ -12,6 +12,30 @@
     <RelativeLayout 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_light"
+        >
+        <TextView 
+            android:id="@+id/tv_tag_safe_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="安全号码"
+            android:textSize="20sp"
+            />
+        
+        <TextView 
+            android:id="@+id/tv_safe_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="18437925095"
+            android:textSize="20sp"
+ 			android:gravity="center_horizontal"
+            android:layout_toRightOf="@id/tv_tag_safe_number"
+            />
+    </RelativeLayout>
+    
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         >
         <TextView 
             android:clickable="true"
@@ -37,6 +61,7 @@
         android:layout_height="wrap_content"
         >
         <TextView 
+            android:onClick="to_antithref_guide01"
             android:clickable="true"
             android:background="@drawable/dialog_set_password_selector"
             android:gravity="center_vertical"
