@@ -33,22 +33,24 @@ public class ReadContact {
 			while (cursor.moveToNext()) {
 				String contact_id = cursor.getString(cursor.getColumnIndex("name_raw_contact_id"));
 				ContactBean contact = new ContactBean();
-				
-				cursor2 = context.getContentResolver().query(Uri.parse(uriData), new String[]{"data1","mimetype"}, "raw_contact_id=?",new String[]{contact_id}, null);
-				while (cursor2.moveToNext()) {
-					//获得联系人的基本信息。
+				if (cursor2!=null) {
 					
-					if (cursor2.getString(1).equals("vnd.android.cursor.item/name")) {
-						contact.setContactName(cursor2.getString(0));
-					}else if (cursor2.getString(1).equals("vnd.android.cursor.item/phone_v2")) {
-						contact.setPhoneNumber(cursor2.getString(0));
+					cursor2 = context.getContentResolver().query(Uri.parse(uriData), new String[]{"data1","mimetype"}, "raw_contact_id=?",new String[]{contact_id}, null);
+					while (cursor2.moveToNext()) {
+						//获得联系人的基本信息。
+						
+						if (cursor2.getString(1).equals("vnd.android.cursor.item/name")) {
+							contact.setContactName(cursor2.getString(0));
+						}else if (cursor2.getString(1).equals("vnd.android.cursor.item/phone_v2")) {
+							contact.setPhoneNumber(cursor2.getString(0));
+						}
+						
 					}
 					
+					contactBeans.add(contact);
 				}
-				
-				contactBeans.add(contact);
-			}
-			cursor2.close();
+				cursor2.close();
+				}
 		}
 		cursor.close();
 		return contactBeans;
