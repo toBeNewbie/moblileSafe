@@ -1,12 +1,26 @@
 package com.example.mobilesafe.testUnit;
 
+import java.util.List;
+
+import com.example.mobilesafe.bean.BlcakListBean;
+import com.example.mobilesafe.dao.BlackListDao;
+import com.example.mobilesafe.db.BlackListDB;
 import com.example.mobilesafe.utils.AntiThrefServiceUtils;
 
 import android.test.AndroidTestCase;
 
 public class readContactsTest extends AndroidTestCase {
-	public void testReadContact(){
-		AntiThrefServiceUtils.serviceRunning(getContext(), "");
-//		Log.d("mimetype", ReadContact.readContacts(getContext()).toString());
+	public void testBlackDB(){
+		 BlackListDao dao=new BlackListDao(getContext());
+		 for (int i = 0; i < 100; i++) {
+			
+			 dao.add("131414"+i, BlackListDB.PHONE_MODE);
+		}
+	}
+	
+	public void testGetAll(){
+		BlackListDao dao=new BlackListDao(getContext());
+		List<BlcakListBean> beans = dao.getBlackList();
+		System.out.println(beans);
 	}
 }

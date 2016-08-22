@@ -107,6 +107,7 @@ public class ContactList extends ListActivity {
 				
 				//加载数据完成。
 				contactBeans=(ArrayList<ContactBean>) ReadContact.readContacts(getApplicationContext());
+				
 				SystemClock.sleep(1000);
 				mHandler.obtainMessage(DONE).sendToTarget();
 				

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        
+        <TextView 
+ 			style="@style/title_style"
+ 			android:text="通讯卫士"
+            />
+        
+        <ImageView 
+            android:id="@+id/iv_add_blacklist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/black_iv_add_selector"
+           	android:layout_centerVertical="true"
+           	android:layout_marginRight="10dp"
+            />
+        
+    </RelativeLayout>
+    
+    
+    <FrameLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        
+        <include layout="@layout/progressbar_circle"/>
+        
+        <ListView 
+            android:id="@+id/lv_black_showdata"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            ></ListView>
+        
+         <ImageView
+            android:id="@+id/iv_black_nodata"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/empty" />
+         
+    </FrameLayout>
+ 
+
+</LinearLayout>
