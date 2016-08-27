@@ -54,7 +54,10 @@ public class BlackListDao {
 		
 		List<BlcakListBean> beans = new ArrayList<BlcakListBean>();
 		SQLiteDatabase liteDatabase = mBlackListDB.getReadableDatabase();
-		Cursor cursor = liteDatabase.rawQuery("select "+BlackListDB.PHONE_COLUMN+","+BlackListDB.MODE_COLUMN+" from "+BlackListDB.BLACKTB_NAME, null);
+		Cursor cursor = liteDatabase.rawQuery("select "+BlackListDB.PHONE_COLUMN+","
+												+BlackListDB.MODE_COLUMN+
+												" from "+BlackListDB.BLACKTB_NAME+
+												" order by _id desc", null);
 		
 		BlcakListBean listBean = null;
 		while (cursor.moveToNext()) {
@@ -83,6 +86,10 @@ public class BlackListDao {
 		
 		liteDatabase.close();
 		return deleteCount>0?true:false;
+	}
+	
+	public void update(BlcakListBean bean){
+		update(bean.getPhone(), bean.getMode());
 	}
 	
 	/**

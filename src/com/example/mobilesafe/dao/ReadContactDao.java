@@ -16,11 +16,48 @@ import android.net.Uri;
  *@date 2016-8-18
  *@des 读取联系人信息。
  */
-public class ReadContact {
+public class ReadContactDao {
 	
 	private static Cursor cursor2;
 	private static Cursor cursor;
 
+	//电话添加。
+	public static List<ContactBean> getTelData(Context context){
+		List<ContactBean> contactBeans=new ArrayList<ContactBean>();
+		Uri uri=Uri.parse("content://call_log/calls");
+		Cursor cursor3 = context.getContentResolver().query(uri, new String[]{"name","number"},null, null, null);
+		ContactBean contactBean=null;
+		while (cursor3.moveToNext()) {
+
+			contactBean=new ContactBean();
+			contactBean.setContactName(cursor3.getString(0));
+			contactBean.setPhoneNumber(cursor3.getString(1));
+			contactBeans.add(contactBean);
+		}
+		cursor3.close();
+		return contactBeans;
+	}
+	
+	
+	//短信添加。
+	public static List<ContactBean> getSmsData(Context context){
+		List<ContactBean> contactBeans=new ArrayList<ContactBean>();
+		Uri uri=Uri.parse("content://sms");
+		Cursor cursor4 = context.getContentResolver().query(uri, new String[]{"address"},null, null, null);
+		ContactBean contactBean=null;
+		while (cursor4.moveToNext()) {
+
+			contactBean=new ContactBean();
+			contactBean.setContactName("sms");
+			contactBean.setPhoneNumber(cursor4.getString(0));
+			contactBeans.add(contactBean);
+		}
+		cursor4.close();
+		return contactBeans;
+	}
+	
+	
+	//获取好友联系人信息。
 	public static List<ContactBean> readContacts(Context context){
 		
 		List<ContactBean> contactBeans=new ArrayList<ContactBean>();
