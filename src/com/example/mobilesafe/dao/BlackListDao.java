@@ -104,4 +104,44 @@ public class BlackListDao {
 	}
 	
 	
+	/**
+	 * 获取当前页的数据。
+	 */
+	public List<BlcakListBean> getPageData(int pageNumber,int countPage){
+		List<BlcakListBean> listBeans = new ArrayList<BlcakListBean>();
+		int startIndex = (pageNumber-1) * countPage;
+		SQLiteDatabase database = mBlackListDB.getReadableDatabase();
+		Cursor cursor = database.rawQuery("select phone,mode from blacktb order by _id desc limit ?,?",new String[]{startIndex+"",countPage+""});
+		
+		BlcakListBean listBean = null;
+		while (cursor.moveToNext()) {
+
+			listBean = new BlcakListBean();
+			
+			listBean.setPhone(cursor.getString(0));
+			listBean.setMode(cursor.getInt(1));
+			
+			listBeans.add(listBean);
+		}
+		cursor.close();
+		return listBeans;
+	}
+	
+	
+	/**
+	 * 获得要显示的行数。
+	 */
+	public int getTotalRaws(){
+		int totalPage = 0;
+		SQLiteDatabase database = mBlackListDB.getReadableDatabase();
+		Cursor cursor = database.rawQuery("select count(1) from blacktb", null);
+		if (cursor.moveToNext()) {
+			totalPage=cursor.getInt(0);
+		}
+		return totalPage;
+	}
+	
+	
+	
+	
 }

@@ -23,4 +23,9 @@ public class readContactsTest extends AndroidTestCase {
 		List<BlcakListBean> beans = dao.getBlackList();
 		System.out.println(beans);
 	}
+	
+	public void testGetPage(){
+		BlackListDao dao=new BlackListDao(getContext());
+		System.out.println(dao.getPageData(1, 5));
+	}
 }

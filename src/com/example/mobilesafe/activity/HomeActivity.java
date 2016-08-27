@@ -212,7 +212,7 @@ public class HomeActivity extends Activity {
 					break;
 				
 				case 1://进入通讯卫士界面
-					Intent intent = new Intent(HomeActivity.this, BlackListActivity.class);
+					Intent intent = new Intent(HomeActivity.this, WebVersionBlackListActivity.class);
 					startActivity(intent);
 					break;
 				default:
