@@ -179,9 +179,7 @@ public class SplashActivity extends Activity {
 
 	private void initEvent() {
 
-		// 测试代码....
-		splashUtils.putBoolean(getApplicationContext(),
-				myConstantValue.AUTO_VERSION_UPDATE, true);
+
 
 		mAnimationSet.setAnimationListener(new AnimationListener() {
 

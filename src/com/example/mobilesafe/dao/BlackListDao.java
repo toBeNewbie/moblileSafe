@@ -127,6 +127,33 @@ public class BlackListDao {
 		return listBeans;
 	}
 	
+	/**
+	 * 
+	 * @param beginRow  起始行。 
+	 * @param countPerPage   分配加载多少条数据。
+	 * @return    新加载的数据。
+	 */
+	
+	public List<BlcakListBean> loadMore(int startRow,int countPerPage){
+		List<BlcakListBean> listBeans = new ArrayList<BlcakListBean>();
+		int startIndex = startRow;
+		SQLiteDatabase database = mBlackListDB.getReadableDatabase();
+		Cursor cursor = database.rawQuery("select phone,mode from blacktb order by _id desc limit ?,?",new String[]{startIndex+"",countPerPage+""});
+		
+		BlcakListBean listBean = null;
+		while (cursor.moveToNext()) {
+
+			listBean = new BlcakListBean();
+			
+			listBean.setPhone(cursor.getString(0));
+			listBean.setMode(cursor.getInt(1));
+			
+			listBeans.add(listBean);
+		}
+		cursor.close();
+		return listBeans;
+	}
+	
 	
 	/**
 	 * 获得要显示的行数。

@@ -52,6 +52,8 @@
         
         <activity android:name="com.example.mobilesafe.activity.PhoneAntiThrefSetThree"></activity>
         
+        <activity android:name="com.example.mobilesafe.activity.AndroidBlackListActivity"></activity>
+        
         <activity android:name="com.example.mobilesafe.activity.PhoneAntiThrefSetFour"></activity>
         <activity android:name="com.example.mobilesafe.activity.PhoneAntiTheft"></activity>
         
@@ -61,6 +63,8 @@
         
         <activity android:name="com.example.mobilesafe.activity.ContactList"></activity>
         
+        <activity android:name="com.example.mobilesafe.activity.DisplaySetting"></activity>
+        
         <activity android:name="com.example.mobilesafe.activity.BaseSmsTelActivity"></activity>
         
         <activity android:name="com.example.mobilesafe.dao.BlackListDao"></activity>
@@ -68,6 +72,8 @@
         <activity android:name="com.example.mobilesafe.activity.TelAddActivity"></activity>
         
         <service android:name="com.example.mobilesafe.service.AntiThrefService"></service>
+        
+        <service android:name="com.example.mobilesafe.service.BlacklistInterceptService"></service>
         
         <receiver android:name="com.example.mobilesafe.receiver.BootCompleteReceiver">
             <intent-filter >

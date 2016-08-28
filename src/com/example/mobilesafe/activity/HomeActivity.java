@@ -5,13 +5,13 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -48,6 +48,7 @@ public class HomeActivity extends Activity {
 			R.drawable.jcgl, R.drawable.lltj, R.drawable.sjsd, R.drawable.hcql,
 			R.drawable.szzx };
 	private AlertDialog dialog;
+	private ImageView iv_settingView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +86,10 @@ public class HomeActivity extends Activity {
 		// TODO Auto-generated method stub
 		setContentView(R.layout.activity_home);
 		logo_home = (ImageView) findViewById(R.id.logo);
-		setting = (ImageView) findViewById(R.id.setting);
+		setting = (ImageView) findViewById(R.id.iv_enter_setting_display);
 		gv_tools = (GridView) findViewById(R.id.gv_home_tools);
+		
+		iv_settingView = (ImageView) findViewById(R.id.iv_enter_setting_display);
 	}
 
 	/**
@@ -190,6 +193,17 @@ public class HomeActivity extends Activity {
 	 * 给主界面的各个功能设置点击事件。
 	 */
 	private void initEvent() {
+		
+		iv_settingView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(HomeActivity.this, DisplaySetting.class);
+				startActivity(intent);
+			}
+		});
+		
+		
 		gv_tools.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -212,7 +226,7 @@ public class HomeActivity extends Activity {
 					break;
 				
 				case 1://进入通讯卫士界面
-					Intent intent = new Intent(HomeActivity.this, WebVersionBlackListActivity.class);
+					Intent intent = new Intent(HomeActivity.this, AndroidBlackListActivity.class);
 					startActivity(intent);
 					break;
 				default:

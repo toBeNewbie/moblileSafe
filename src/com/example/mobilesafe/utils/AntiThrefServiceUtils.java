@@ -23,7 +23,7 @@ public class AntiThrefServiceUtils {
 		ActivityManager serviceManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
 		List<RunningServiceInfo> serviceInfos = serviceManager.getRunningServices(50);
 		for (RunningServiceInfo runningServiceInfo : serviceInfos) {
-			condition = runningServiceInfo.service.getClassName().equals("com.example.mobilesafe.service.AntiThrefService");
+			condition = runningServiceInfo.service.getClassName().equals(serviceName);
 			if (condition) {
 				break;
 			}
