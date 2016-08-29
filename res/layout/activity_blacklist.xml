@@ -34,12 +34,12 @@
         
         <include layout="@layout/progressbar_circle"/>
         
-        <com.itheima11.refreshlistview_lib.RefreshListView 
+        <ListView 
             android:id="@+id/lv_black_showdata"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
-            ></com.itheima11.refreshlistview_lib.RefreshListView>
+            ></ListView>
         
          <ImageView
             android:id="@+id/iv_black_nodata"

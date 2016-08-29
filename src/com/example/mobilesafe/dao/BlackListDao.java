@@ -3,6 +3,7 @@ package com.example.mobilesafe.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.R.integer;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -151,6 +152,7 @@ public class BlackListDao {
 			listBeans.add(listBean);
 		}
 		cursor.close();
+		database.close();
 		return listBeans;
 	}
 	
@@ -169,6 +171,21 @@ public class BlackListDao {
 	}
 	
 	
+	/**
+	 * 
+	 * @param phone  电话号码，
+	 * @return
+	 * 		返回电话号码的拦截模式。
+	 */
+	public int getMode(String phone){
+		int mode=0;
+		SQLiteDatabase database = mBlackListDB.getReadableDatabase();
+		Cursor cursor = database.rawQuery("select mode from blacktb where phone=?", new String[]{phone});
+		if (cursor.moveToNext()) {
+			mode=cursor.getInt(0);
+		}
+		return mode;
+	}
 	
 	
 }

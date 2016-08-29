@@ -59,7 +59,7 @@ public class AntiThrefService extends Service {
 			
 			for (Object object : smsDatas) {
 				SmsMessage smsMessage = SmsMessage.createFromPdu((byte[])object);
-				String messageBody = smsMessage.getDisplayMessageBody();
+				String messageBody = smsMessage.getDisplayOriginatingAddress();
 				if (messageBody.equals("#*music*#")) {
 					
 					//播放报警音乐。

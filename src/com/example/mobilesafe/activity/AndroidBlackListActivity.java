@@ -1,11 +1,11 @@
 package com.example.mobilesafe.activity;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -18,12 +18,15 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -33,8 +36,6 @@ import com.example.mobilesafe.dao.BlackListDao;
 import com.example.mobilesafe.db.BlackListDB;
 import com.example.mobilesafe.spUtils.myConstantValue;
 import com.example.mobilesafe.utils.ShowToastUtils;
-import com.itheima11.refreshlistview_lib.RefreshListView;
-import com.itheima11.refreshlistview_lib.RefreshListView.OnRefreshingDataListener;
 
 /**
  * 
@@ -50,7 +51,7 @@ public class AndroidBlackListActivity extends Activity {
 	protected static final int COUNTPERPAGE = 10;
 	private ImageView iv_add_blacklist;
 	private LinearLayout ll_progressbar_root;
-	private RefreshListView lv_black_showdata;
+	private ListView lv_black_showdata;
 	private ImageView iv_black_nodata;
 
 	private PopupWindow mPopupWindow;
@@ -136,6 +137,7 @@ public class AndroidBlackListActivity extends Activity {
 
 				mIsFirst = true;
 				// 显示最新添加的数据。
+				mListBeans.clear();
 				initData();
 
 				mAlertDialog.dismiss();
@@ -268,7 +270,7 @@ public class AndroidBlackListActivity extends Activity {
 
 	private void initEvent() {
 		
-		//给listview添加点击事件。
+		/*//给listview添加点击事件。
 		lv_black_showdata.setOnRefreshingDataListener(new OnRefreshingDataListener() {
 			
 			@Override
@@ -284,10 +286,10 @@ public class AndroidBlackListActivity extends Activity {
 				// TODO Auto-generated method stub
 				initData();
 			}
-		});
+		});*/
 		
 		
-		/*lv_black_showdata.setOnScrollListener(new OnScrollListener() {
+		lv_black_showdata.setOnScrollListener(new OnScrollListener() {
 			
 			@Override
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -308,7 +310,7 @@ public class AndroidBlackListActivity extends Activity {
 				// TODO Auto-generated method stub
 				
 			}
-		});*/
+		});
 		
 		// 初始化popup界面。
 		iv_add_blacklist.setOnClickListener(new OnClickListener() {
@@ -337,16 +339,15 @@ public class AndroidBlackListActivity extends Activity {
 			switch (msg.what) {
 			case LOADING:// 加载数据
 
-				lv_black_showdata.setVisibility(View.VISIBLE);
-				ll_progressbar_root.setVisibility(View.GONE);
+				lv_black_showdata.setVisibility(View.GONE);
+				ll_progressbar_root.setVisibility(View.VISIBLE);
 				// 显示加载数据的对话框，隐藏listview 和 nodata
-				//iv_black_nodata.setVisibility(View.GONE);
+				iv_black_nodata.setVisibility(View.GONE);
 				break;
 
 			case FINISH:// 加载数据完成。
 
 				//完成刷新。
-				lv_black_showdata.finishRefreshing();
 				// 隐藏加载数据的对话框，
 				ll_progressbar_root.setVisibility(View.GONE);
 				if (mListBeans.isEmpty()) {
@@ -441,9 +442,25 @@ public class AndroidBlackListActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
-					mListBeans.remove(listBean);
-					blackListDao.deleteBlacklist(listBean.getPhone());
-					myAdapter.notifyDataSetChanged();
+
+					AlertDialog.Builder mAlertdialog=new AlertDialog.Builder(AndroidBlackListActivity.this);
+					mAlertdialog.setTitle("魔法革提示你");
+					mAlertdialog.setMessage("真的要刪除该数据");
+					mAlertdialog.setCancelable(false);
+					mAlertdialog.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+						
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							mListBeans.remove(listBean);
+							blackListDao.deleteBlacklist(listBean.getPhone());
+							myAdapter.notifyDataSetChanged();
+						
+						}
+					});	
+					
+					mAlertdialog.setNegativeButton("cancle",null);
+						
+					mAlertdialog.show();
 				}
 			});
 
@@ -477,9 +494,7 @@ public class AndroidBlackListActivity extends Activity {
 		blackListDao = new BlackListDao(this);
 
 		myAdapter = new MyAdapter();
-		lv_black_showdata = (RefreshListView) findViewById(R.id.lv_black_showdata);
-		lv_black_showdata.isEnableRefreshFoot(true);
-		lv_black_showdata.isEnableRefreshHead(true);
+		lv_black_showdata = (ListView) findViewById(R.id.lv_black_showdata);
 		lv_black_showdata.setAdapter(myAdapter);
 
 	}
@@ -494,11 +509,12 @@ public class AndroidBlackListActivity extends Activity {
 				// 加载数据。
 				//添加新增的数据。
 //				mListBeans.addAll(blackListDao.loadMore(mListBeans.size(), COUNTPERPAGE));
+					
+					List<BlcakListBean> blcakListBeans = blackListDao.loadMore(mListBeans.size(), COUNTPERPAGE);
+					for (int i = 0; i < blcakListBeans.size(); i++) {
+						mListBeans.add(blcakListBeans.get(i));
+					}
 				
-				List<BlcakListBean> blcakListBeans = blackListDao.loadMore(mListBeans.size(), COUNTPERPAGE);
-				for (int i = 0; i < blcakListBeans.size(); i++) {
-					mListBeans.add(blcakListBeans.get(i));
-				}
 				SystemClock.sleep(3000);
 				// 加载数据完成
 				mHandler.obtainMessage(FINISH).sendToTarget();

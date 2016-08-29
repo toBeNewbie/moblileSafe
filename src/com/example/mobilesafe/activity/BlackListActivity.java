@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -132,6 +133,7 @@ public class BlackListActivity extends Activity {
 
 				mIsFirst = true;
 				// 显示最新添加的数据。
+				mListBeans.clear();
 				initData();
 
 				mAlertDialog.dismiss();
@@ -248,14 +250,13 @@ public class BlackListActivity extends Activity {
 		startActivityForResult(intent, 0);
 	}
 
-	
-	private void showDialog(String phone){
-		
+	private void showDialog(String phone) {
+
 		inputBlack.setText(phone);
-		
+
 		mAlertDialog.show();
 	}
-	
+
 	// 手动添加黑名单。
 	protected void manualAdd() {
 		// ShowToastUtils.showToast("manualAdd", this);
@@ -392,14 +393,32 @@ public class BlackListActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
-					mListBeans.remove(listBean);
-					blackListDao.deleteBlacklist(listBean.getPhone());
-					myAdapter.notifyDataSetChanged();
+
+					AlertDialog.Builder mAlertdialog=new AlertDialog.Builder(BlackListActivity.this);
+					mAlertdialog.setTitle("魔法革提示你");
+					mAlertdialog.setMessage("真的要刪除该数据");
+					mAlertdialog.setCancelable(false);
+					mAlertdialog.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+						
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							mListBeans.remove(listBean);
+							blackListDao.deleteBlacklist(listBean.getPhone());
+							myAdapter.notifyDataSetChanged();
+						
+						}
+					});	
+					
+					mAlertdialog.setNegativeButton("cancle",null);
+						
+					mAlertdialog.show();
 				}
 			});
 
 			return convertView;
 		}
+
+		
 
 	}
 
