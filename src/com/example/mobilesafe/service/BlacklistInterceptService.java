@@ -1,6 +1,10 @@
 package com.example.mobilesafe.service;
 
+import java.lang.reflect.Method;
+
+import com.android.internal.telephony.ITelephony;
 import com.example.mobilesafe.dao.BlackListDao;
+import com.example.mobilesafe.dao.ReadContactDao;
 import com.example.mobilesafe.db.BlackListDB;
 
 import android.R.integer;
@@ -9,6 +13,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.ContentObserver;
+import android.net.Uri;
+import android.os.Handler;
 import android.os.IBinder;
 import android.telephony.PhoneStateListener;
 import android.telephony.SmsMessage;
@@ -101,6 +108,9 @@ public class BlacklistInterceptService extends Service {
 			 
 				int mode = mBlackListDao.getMode(incomingNumber);
 				if ((mode & BlackListDB.PHONE_MODE)!=0) {
+					//删除电话日志。
+					deletePhoneLog(incomingNumber);
+					//挂断电话。
 					endPhone();
 				}
 			}
@@ -111,10 +121,47 @@ public class BlacklistInterceptService extends Service {
 				PhoneStateListener.LISTEN_CALL_STATE);// 监听电话状态。
 	}
 
+	//挂断电话。
 	protected void endPhone() {
+		
+		TelephonyManager telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+		//挂断电话被屏蔽啦。
+		try {
+			Class clazz = Class.forName("android.os.ServiceManager");
+			Method method = clazz.getDeclaredMethod("getService", String.class);
+			IBinder iBinder = (IBinder) method.invoke(null, TELEPHONY_SERVICE);
+			
+			ITelephony iTelephony = ITelephony.Stub.asInterface(iBinder);
+			iTelephony.endCall();
+			
+		
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// 挂断电话。
-		System.out.println("电话已经挂断。。。。");
 	}
+
+	private void deletePhoneLog(final String incomingNumber) {
+		
+		Uri uri=Uri.parse("content://call_log/calls");
+		getContentResolver().registerContentObserver(uri, true, new ContentObserver(new Handler()) {
+		
+			@Override
+			public void onChange(boolean selfChange) {
+				// 日志发生变化。
+				ReadContactDao.deleteLog(getApplicationContext(), incomingNumber);
+				
+				//取消注册。
+				getContentResolver().unregisterContentObserver(this);
+				
+				super.onChange(selfChange);
+			}
+		});
+	}
+	
+	
 
 	/**
 	 * 注册短信拦截服务。

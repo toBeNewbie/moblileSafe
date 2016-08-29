@@ -20,7 +20,20 @@ public class ReadContactDao {
 	
 	private static Cursor cursor2;
 	private static Cursor cursor;
+ 
+	/**
+	 * 删除电话日志信息。
+	 * 
+	 * @param context  
+	 * @param phoneNumber  要删除的手机号码。
+	 */
+	public static void deleteLog(Context context,String phoneNumber){
+		
+		Uri uri=Uri.parse("content://call_log/calls");
 
+		context.getContentResolver().delete(uri, "number=?", new String[]{phoneNumber});
+	}
+	
 	//电话添加。
 	public static List<ContactBean> getTelData(Context context){
 		List<ContactBean> contactBeans=new ArrayList<ContactBean>();
