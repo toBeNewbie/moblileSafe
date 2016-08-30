@@ -2,6 +2,7 @@ package com.example.mobilesafe;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -20,6 +21,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.AssetManager;
 import android.content.res.Resources.NotFoundException;
 import android.net.Uri;
 import android.os.Bundle;
@@ -68,7 +70,7 @@ public class SplashActivity extends Activity {
 	/**
 	 * 消息处理，异常，错误处理。
 	 */
-	Handler handler =new Handler(){
+	Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case LOAD_HOME_ACTIVITY:
@@ -80,35 +82,39 @@ public class SplashActivity extends Activity {
 			default:
 				switch (msg.what) {
 				case 404:
-					Toast.makeText(getApplicationContext(), "网络连接错误！！", 0).show();
+					Toast.makeText(getApplicationContext(), "网络连接错误！！", 0)
+							.show();
 					break;
 				case 500:
-					Toast.makeText(getApplicationContext(), "服务器内部错误.....", 0).show();
+					Toast.makeText(getApplicationContext(), "服务器内部错误.....", 0)
+							.show();
 					break;
 				case 1010:
-					Toast.makeText(getApplicationContext(), "url 格式错误。。。。", 0).show();
+					Toast.makeText(getApplicationContext(), "url 格式错误。。。。", 0)
+							.show();
 					break;
 				case 1011:
-					Toast.makeText(getApplicationContext(), "资源找不到。。。。", 0).show();
+					Toast.makeText(getApplicationContext(), "资源找不到。。。。", 0)
+							.show();
 					break;
 				case 1012:
-					Toast.makeText(getApplicationContext(), "网络不可用，请连接网络", 0).show();
+					Toast.makeText(getApplicationContext(), "网络不可用，请连接网络", 0)
+							.show();
 					break;
 				case 1013:
-					Toast.makeText(getApplicationContext(), "json 格式解析错误.......", 0).show();
+					Toast.makeText(getApplicationContext(),
+							"json 格式解析错误.......", 0).show();
 					break;
-				 default:
+				default:
 					break;
 				}
 				startHomeActivity();
 				break;
 			}
-			
 
 		};
 	};
 
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -177,14 +183,54 @@ public class SplashActivity extends Activity {
 		}
 	}
 
+	/**
+	 * 
+	 * @param fileName
+	 *            要拷贝的数据库文件名。
+	 * 
+	 * @throws IOException
+	 */
+	public void copyDBLocation(String fileName) throws IOException {
+
+		// 获取文件的路径./data/data/com.example.mobilesafe/files/
+		File filesDir = getFilesDir();
+		File file = new File(filesDir, fileName);
+		if (file.exists()) {
+			return;
+		}
+		FileOutputStream fileOutputStream = new FileOutputStream(file);
+
+		// 获取输入流。
+		AssetManager assetManager = getAssets();
+		InputStream inputStream = assetManager.open(fileName);
+
+		byte[] buffer = new byte[1024 * 5];
+		int length = inputStream.read(buffer);
+		while (length != -1) {
+
+			fileOutputStream.write(buffer, 0, length);
+			// 刷新缓冲区到目的地。
+			fileOutputStream.flush();
+
+			// 继续读取。
+			length = inputStream.read(buffer);
+		}
+
+		inputStream.close();
+		fileOutputStream.close();
+	}
+
 	private void initEvent() {
-
-
 
 		mAnimationSet.setAnimationListener(new AnimationListener() {
 
+			
+			
 			@Override
 			public void onAnimationStart(Animation animation) {
+				
+				cobyDataThread("address.db");
+				
 				// TODO Auto-generated method stub
 				if (splashUtils.getbBoolean(getApplicationContext(),
 						myConstantValue.AUTO_VERSION_UPDATE, false)) {
@@ -194,6 +240,19 @@ public class SplashActivity extends Activity {
 
 				}
 
+			}
+
+			public void cobyDataThread(final String fileName) {
+				new Thread(){
+					public void run() {
+						try {
+							copyDBLocation(fileName);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					};
+				}.start();
 			}
 
 			@Override
@@ -225,19 +284,18 @@ public class SplashActivity extends Activity {
 		new Thread() {
 			@Override
 			public void run() {
-				 readDataFromUrl();
+				readDataFromUrl();
 			}
 		}.start();
 	}
 
-	
 	/**
 	 * 连接网络，从网络里获得数据。
 	 */
 	protected void readDataFromUrl() {
 		// TODO Auto-generated method stub
 
-		Message message=handler.obtainMessage();
+		Message message = handler.obtainMessage();
 		long startTime = System.currentTimeMillis();
 		try {
 			URL url = new URL(getResources().getString(R.string.download_url));
@@ -252,40 +310,40 @@ public class SplashActivity extends Activity {
 				parseJsonData(jsonContent);
 
 				if (version_code == version_info.getVersion_code()) {
-					//获得消息，动画播放。
-					message.what=LOAD_HOME_ACTIVITY;
+					// 获得消息，动画播放。
+					message.what = LOAD_HOME_ACTIVITY;
 				} else {
-					//有新版本。
-					message.what=UPDATE_APK;
+					// 有新版本。
+					message.what = UPDATE_APK;
 				}
 
-			}else {
-				message.what=responseCode;
+			} else {
+				message.what = responseCode;
 			}
 
 		} catch (MalformedURLException e) {
 			// URL格式错误。
-			message.what=1010;
+			message.what = 1010;
 			e.printStackTrace();
 		} catch (NotFoundException e) {
 			// 找不到地址错误。
-			message.what=1011;
+			message.what = 1011;
 			e.printStackTrace();
 		} catch (IOException e) {
 			// io异常错误。
-			message.what=1012;
+			message.what = 1012;
 			e.printStackTrace();
 		} catch (JSONException e) {
 			// 解析json数据格式出错
-			message.what=1013;
+			message.what = 1013;
 			e.printStackTrace();
-		} finally{
+		} finally {
 			long endTime = System.currentTimeMillis();
-			if (endTime-startTime < 2000) {
-				SystemClock.sleep(2000-(endTime-startTime));
+			if (endTime - startTime < 2000) {
+				SystemClock.sleep(2000 - (endTime - startTime));
 			}
-			
-			//发送消息，确保动画播完，才进入主界面。
+
+			// 发送消息，确保动画播完，才进入主界面。
 			handler.sendMessage(message);
 		}
 
@@ -298,72 +356,74 @@ public class SplashActivity extends Activity {
 
 		AlertDialog.Builder builder;
 		builder = new AlertDialog.Builder(this);
-		
+
 		builder.setTitle("警告");
-		builder.setMessage("新版功能：\n"+version_info.getDesc());
-		builder.setPositiveButton("下载", new OnClickListener(){
-			
+		builder.setMessage("新版功能：\n" + version_info.getDesc());
+		builder.setPositiveButton("下载", new OnClickListener() {
+
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				//下载apk.
+				// 下载apk.
 				downloadApk();
 			}
 		}).setNegativeButton("取消", new OnClickListener() {
-			
+
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				startHomeActivity();
 			}
 		});
 		builder.setOnCancelListener(new OnCancelListener() {
-			
+
 			@Override
 			public void onCancel(DialogInterface dialog) {
 				// TODO Auto-generated method stub
-				
+
 				startHomeActivity();
 			}
 		});
 		builder.show();
-		
+
 	}
 
-	
-	
 	/**
 	 * 发现新版本，从服务器上下载相关Apk.
 	 */
 	protected void downloadApk() {
 		// TODO Auto-generated method stub
-		String path = Environment.getExternalStorageDirectory()+"/news.apk";
+		String path = Environment.getExternalStorageDirectory() + "/news.apk";
 		HttpUtils httpUtils = new HttpUtils();
-		httpUtils.download(version_info.getDownloadUrl(), path, new RequestCallBack<File>() {
-			
-			@Override
-			public void onSuccess(ResponseInfo<File> responseInfo) {
-				// TODO Auto-generated method stub
+		httpUtils.download(version_info.getDownloadUrl(), path,
+				new RequestCallBack<File>() {
 
-				 installApk();
-			}
-			
-			@Override
-			public void onFailure(HttpException error, String msg) {
-				// TODO Auto-generated method stub
-				Toast.makeText(getApplicationContext(), "下载失败"+msg, 0).show();
-				startHomeActivity();
-			}
-		});
+					@Override
+					public void onSuccess(ResponseInfo<File> responseInfo) {
+						// TODO Auto-generated method stub
+
+						installApk();
+					}
+
+					@Override
+					public void onFailure(HttpException error, String msg) {
+						// TODO Auto-generated method stub
+						Toast.makeText(getApplicationContext(), "下载失败" + msg, 0)
+								.show();
+						startHomeActivity();
+					}
+				});
 	}
 
 	/**
 	 * 安装下载好的Apk。
 	 */
 	protected void installApk() {
-	 
-		String fileName = Environment.getExternalStorageDirectory()+"/news.apk";
+
+		String fileName = Environment.getExternalStorageDirectory()
+				+ "/news.apk";
 		Intent intent = new Intent("android.intent.action.VIEW");
 		intent.addCategory("android.intent.category.DEFAULT");
-		intent.setDataAndType(Uri.fromFile(new File(fileName)), "application/vnd.android.package-archive");
+		intent.setDataAndType(Uri.fromFile(new File(fileName)),
+				"application/vnd.android.package-archive");
 		startActivityForResult(intent, 1);
 	}
 
@@ -410,11 +470,10 @@ public class SplashActivity extends Activity {
 	public void startHomeActivity() {
 		Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
 		startActivity(intent);
-		
+
 		finish();
 	}
-	
-	
+
 	/**
 	 * 监控安装过程中取消操作。
 	 */
@@ -424,5 +483,5 @@ public class SplashActivity extends Activity {
 		startHomeActivity();
 		super.onActivityResult(requestCode, resultCode, data);
 	}
- 
+
 }
