@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:newbie="http://schemas.android.com/apk/res/com.example.mobilesafe"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -8,53 +9,43 @@
         style="@style/title_style"
         android:text="设置中心" />
 
-    <RelativeLayout
-        android:id="@+id/rl_setting_blacklist_intercept"
+    <com.example.mobilesafe.difineView.SettingCustomView
+        android:id="@+id/custom_view_autoupdate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        newbie:bg_custom_selector="first"
+        newbie:display_text="自动更新服务" >
+    </com.example.mobilesafe.difineView.SettingCustomView>
+
+    <com.example.mobilesafe.difineView.SettingCustomView
+        android:id="@+id/custom_view_blacklist_intercept"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        newbie:bg_custom_selector="last"
+        newbie:display_text="黑名单拦截服务服务" >
+    </com.example.mobilesafe.difineView.SettingCustomView>
+
+    <com.example.mobilesafe.difineView.SettingCustomView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@drawable/first_setting_selector"
-        android:clickable="true"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp" >
+        newbie:bg_custom_selector="first"
+        newbie:display_text="看门狗服务" >
+    </com.example.mobilesafe.difineView.SettingCustomView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="黑名单拦截服务" />
-
-        <ImageView
-            android:id="@+id/iv_blacklist_intercept"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/off" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rl_setting_auto_update_intercept"
+    <com.example.mobilesafe.difineView.SettingCustomView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/last_setting_selector"
-        android:clickable="true"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp" >
+        newbie:bg_custom_selector="middle"
+        newbie:display_text="电话归属地样式" >
+    </com.example.mobilesafe.difineView.SettingCustomView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="自动更新设置" />
-
-        <ImageView
-            android:id="@+id/iv_autoupdate_display"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/off" />
-    </RelativeLayout>
+    <com.example.mobilesafe.difineView.SettingCustomView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        newbie:bg_custom_selector="last"
+        newbie:display_text="电话归属地服务" >
+    </com.example.mobilesafe.difineView.SettingCustomView>
 
 </LinearLayout>

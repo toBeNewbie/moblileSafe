@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="SettingCustomView">
+        
+        
+        <attr name="display_text" format="string" />
+        
+        
+        <attr name="bg_custom_selector">
+            <enum name="first" value="0" />
+            <enum name="middle" value="1" />
+            <enum name="last" value="2" />
+        </attr>
+        
+        
+    </declare-styleable>
+
+</resources>
