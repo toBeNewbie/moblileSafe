@@ -96,6 +96,12 @@ public class SettingCustomView extends RelativeLayout {
 		//获取背景选择器的内容。
 		String attributeValue = attrs.getAttributeValue("http://schemas.android.com/apk/res/com.example.mobilesafe", "bg_custom_selector");
 		
+		boolean attributeBooleanValue = attrs.getAttributeBooleanValue("http://schemas.android.com/apk/res/com.example.mobilesafe", "is_disable_toggle", false);
+		
+		if (attributeBooleanValue) {
+			customDisplay.setVisibility(View.GONE);
+		}
+		
 		switch (Integer.parseInt(attributeValue)) {
 		
 		case 0:

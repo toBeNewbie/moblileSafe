@@ -14,6 +14,8 @@
         </attr>
         
         
+         <attr name="is_disable_toggle" format="boolean" />
+        
     </declare-styleable>
 
 </resources>

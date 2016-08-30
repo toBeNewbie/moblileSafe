@@ -229,6 +229,10 @@ public class HomeActivity extends Activity {
 					Intent intent = new Intent(HomeActivity.this, AndroidBlackListActivity.class);
 					startActivity(intent);
 					break;
+					
+				case 7://进入魔法革工具界面
+					Intent advacedTools = new Intent(HomeActivity.this, AdvancedToolsActivity.class);
+					startActivity(advacedTools);
 				default:
 					break;
 				}

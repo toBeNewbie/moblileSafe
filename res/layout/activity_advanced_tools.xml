@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:newbie="http://schemas.android.com/apk/res/com.example.mobilesafe"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        style="@style/title_style"
+        android:text="高级工具" />
+
+    <com.example.mobilesafe.difineView.SettingCustomView
+        android:id="@+id/custom_advanced_tools_phonenumber_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        newbie:bg_custom_selector="first"
+        newbie:is_disable_toggle="true"
+        newbie:display_text="电话归属地查询" >
+    </com.example.mobilesafe.difineView.SettingCustomView>
+    
+    <com.example.mobilesafe.difineView.SettingCustomView
+        android:id="@+id/custom_advanced_tools_phoneservice_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        newbie:bg_custom_selector="last"
+        newbie:is_disable_toggle="true"
+        newbie:display_text="服务号码查询" >
+    </com.example.mobilesafe.difineView.SettingCustomView>
+
+</LinearLayout>

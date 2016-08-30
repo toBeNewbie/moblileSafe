@@ -70,8 +70,11 @@
         <activity android:name="com.example.mobilesafe.activity.BaseSmsTelActivity"></activity>
         
         <activity android:name="com.example.mobilesafe.dao.BlackListDao"></activity>
+        <activity android:name="com.example.mobilesafe.activity.AdvancedToolsActivity"></activity>
         
         <activity android:name="com.example.mobilesafe.activity.TelAddActivity"></activity>
+        
+        <activity android:name="com.example.mobilesafe.activity.PhoneLocationQuery"></activity>
         
         <service android:name="com.example.mobilesafe.service.AntiThrefService"></service>
         

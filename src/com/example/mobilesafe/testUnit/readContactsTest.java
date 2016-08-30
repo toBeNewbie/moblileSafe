@@ -3,6 +3,7 @@ package com.example.mobilesafe.testUnit;
 import java.util.List;
 
 import com.example.mobilesafe.bean.BlcakListBean;
+import com.example.mobilesafe.dao.AddressPhoneLocationDao;
 import com.example.mobilesafe.dao.BlackListDao;
 import com.example.mobilesafe.db.BlackListDB;
 import com.example.mobilesafe.utils.AntiThrefServiceUtils;
@@ -16,6 +17,10 @@ public class readContactsTest extends AndroidTestCase {
 			
 			 dao.add("131414"+i, BlackListDB.PHONE_MODE);
 		}
+	}
+	
+	public void testLocation(){
+		System.out.println(AddressPhoneLocationDao.getFixedPhoneLocation("775"));
 	}
 	
 	public void testGetAll(){
