@@ -20,7 +20,7 @@ public class readContactsTest extends AndroidTestCase {
 	}
 	
 	public void testLocation(){
-		System.out.println(AddressPhoneLocationDao.getFixedPhoneLocation("775"));
+		System.out.println(AddressPhoneLocationDao.getPhoneMessage("18339450881"));
 	}
 	
 	public void testGetAll(){

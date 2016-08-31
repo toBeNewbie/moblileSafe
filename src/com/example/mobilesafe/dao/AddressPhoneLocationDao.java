@@ -1,5 +1,8 @@
 package com.example.mobilesafe.dao;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -15,7 +18,7 @@ public class AddressPhoneLocationDao {
 	 * 
 	 * @return 移动手机号码的归属地信息。
 	 */
-	public static String getMoblePhoneLocation(String phoneNumber) {
+	private static String getMoblePhoneLocation(String phoneNumber) {
 		String locationMess = "未知号码";
 
 		SQLiteDatabase sqLiteDatabase = SQLiteDatabase.openDatabase(
@@ -54,5 +57,36 @@ public class AddressPhoneLocationDao {
 		}
 
 		return locationMess;
+	}
+	
+	
+	/**
+	 * 
+	 * @param phoneString  要查询的手机号码。
+	 * @return
+	 */
+	public static String getPhoneMessage(String phoneString){
+		
+		String location="未知截断";
+		//18437925095
+		 Pattern p = Pattern.compile("1[34578]{1}[1-9]{9}");
+		 Matcher m = p.matcher(phoneString);
+		 boolean b = m.matches();
+		
+		 if (b) {
+			location=getMoblePhoneLocation(phoneString.substring(0, 7));
+		}else {
+			
+			//2位区号。
+			if (phoneString.charAt(1)=='1' || phoneString.charAt(1)=='2') {
+				
+				location = getFixedPhoneLocation(phoneString.substring(1, 3));
+			}else {
+				//3位区号。
+				location = getFixedPhoneLocation(phoneString.substring(1, 4));
+			}
+		}
+		 
+		return location.substring(0, location.length()-2);
 	}
 }
