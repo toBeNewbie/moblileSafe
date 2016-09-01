@@ -43,5 +43,23 @@
         <item name="android:textSize">15sp</item>
         <item name="android:drawableLeft">@drawable/dialog_title_default_icon</item>
     </style>
+    
+    
+    <!--  自定义对话框样式-->
+    <style name="Theme.Dialog.Phone.Location" parent="@android:style/Theme.Dialog">
+        
+        <item name="android:windowBackground">@android:color/darker_gray</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        
+        <!--  阴影效果-->
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        
+        //点击对话框外部，消除对话框
+        <item name="android:windowCloseOnTouchOutside">true</item>
+    </style>
 
 </resources>

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.mobilesafe.R;
+import com.example.mobilesafe.difineView.CustomDialogView;
 import com.example.mobilesafe.difineView.SettingCustomView;
 import com.example.mobilesafe.difineView.SettingCustomView.onToggleChangeListener;
 import com.example.mobilesafe.service.BlacklistInterceptService;
@@ -13,6 +14,7 @@ import com.example.mobilesafe.service.ShowIncomingPhoneLocation;
 import com.example.mobilesafe.spUtils.myConstantValue;
 import com.example.mobilesafe.spUtils.splashUtils;
 import com.example.mobilesafe.utils.AntiThrefServiceUtils;
+import com.example.mobilesafe.utils.ShowToastUtils;
 
 /**
  * 
@@ -25,6 +27,7 @@ public class DisplaySetting extends Activity {
 	private SettingCustomView customView_auto_update;
 	private SettingCustomView customView_blacklist_intercept;
 	private SettingCustomView coutomView_phone_location_display;
+	private SettingCustomView customView_phone_display_style;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,10 @@ public class DisplaySetting extends Activity {
 	}
 
 	private void initDate() {
+		
+		//初始化电话归属地样式
+		customView_phone_display_style.setText("归属地显示样式("+CustomDialogView.locationStyleNames[splashUtils.getInt(getApplicationContext(), myConstantValue.PHONE_LOCATION_STYLE_INDEX, 0)]+")");
+		
 
 		// 初始化自动更新代码块。
 		customView_auto_update.setToggleOn(splashUtils.getbBoolean(
@@ -107,6 +114,13 @@ public class DisplaySetting extends Activity {
 					}
 				}
 					break;
+					
+				case R.id.custom_phone_location_display_style://设置归属地显示样式。
+				{
+					CustomDialogView dialogView= new CustomDialogView(DisplaySetting.this,customView_phone_display_style);
+					dialogView.show();
+				}
+					break;
 				default:
 					break;
 				}
@@ -118,6 +132,8 @@ public class DisplaySetting extends Activity {
 				.setOnToggleListener(toggleChangeListener);
 		coutomView_phone_location_display
 				.setOnToggleListener(toggleChangeListener);
+		
+		customView_phone_display_style.setOnToggleListener(toggleChangeListener);
 
 	}
 
@@ -129,5 +145,7 @@ public class DisplaySetting extends Activity {
 
 		coutomView_phone_location_display = (SettingCustomView) findViewById(R.id.custom_phone_number_display_location_service);
 
+		customView_phone_display_style = (SettingCustomView) findViewById(R.id.custom_phone_location_display_style);
+	
 	}
 }

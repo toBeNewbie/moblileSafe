@@ -19,4 +19,7 @@ public interface myConstantValue {
 	
 	String TOAST_X = "toast_x";
 	String TOAST_Y = "toast_y";
+	
+	
+	String PHONE_LOCATION_STYLE_INDEX="phoneLocationStyleIndex";
 }

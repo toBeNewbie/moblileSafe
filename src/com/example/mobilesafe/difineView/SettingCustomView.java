@@ -33,6 +33,13 @@ public class SettingCustomView extends RelativeLayout {
 		initEvent();
 	}
 
+	
+	//给自定义控件添加文本显示。
+	public void setText(String desc){
+		customTextView.setText(desc);
+	}
+	
+	
 	/**
 	 * 
 	 * @author Administrator
@@ -96,9 +103,11 @@ public class SettingCustomView extends RelativeLayout {
 		//获取背景选择器的内容。
 		String attributeValue = attrs.getAttributeValue("http://schemas.android.com/apk/res/com.example.mobilesafe", "bg_custom_selector");
 		
+		//取出图标是否显示的设置。
 		boolean attributeBooleanValue = attrs.getAttributeBooleanValue("http://schemas.android.com/apk/res/com.example.mobilesafe", "is_disable_toggle", false);
 		
 		if (attributeBooleanValue) {
+			
 			customDisplay.setVisibility(View.GONE);
 		}
 		

@@ -47,9 +47,18 @@ public class MyToast implements OnTouchListener{
          
 	}
 	
+	//给自定义Toast设置背景色。
+	public void setBgImage(int imaIndex){
+		mView.setBackgroundResource(CustomDialogView.locationStyleIma[imaIndex]);
+	}
+	
 	
 	public void show(String phoneLocation){
 		mView = View.inflate(mContext, R.layout.syst_toast, null);
+		
+		//给自定义Toast设置背景。
+		setBgImage(splashUtils.getInt(mContext, myConstantValue.PHONE_LOCATION_STYLE_INDEX, 0));
+		
 		TextView toastText = (TextView) mView.findViewById(R.id.tv_toast_text);
 		toastText.setText(phoneLocation);
 		mView.setOnTouchListener(this);

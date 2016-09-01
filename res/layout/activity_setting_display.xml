@@ -34,19 +34,16 @@
         newbie:bg_custom_selector="first"
         newbie:display_text="电话归属地显示服务" >
     </com.example.mobilesafe.difineView.SettingCustomView>
-
-    <com.example.mobilesafe.difineView.SettingCustomView
+    
+     <com.example.mobilesafe.difineView.SettingCustomView
+        android:id="@+id/custom_phone_location_display_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        newbie:bg_custom_selector="middle"
-        newbie:display_text="电话归属地样式" >
-    </com.example.mobilesafe.difineView.SettingCustomView>
-
-    <com.example.mobilesafe.difineView.SettingCustomView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         newbie:bg_custom_selector="last"
-        newbie:display_text="电话归属地服务" >
+        newbie:is_disable_toggle="true"
+        newbie:display_text="归属地显示样式(默认)" >
     </com.example.mobilesafe.difineView.SettingCustomView>
 
-</LinearLayout>
+ </LinearLayout>
+    
