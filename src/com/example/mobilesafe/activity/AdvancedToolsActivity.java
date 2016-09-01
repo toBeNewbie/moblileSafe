@@ -38,7 +38,8 @@ public class AdvancedToolsActivity extends Activity {
 					break;
 				//服务电话归属地查询。
 				case R.id.custom_advanced_tools_phoneservice_location:
-					
+					Intent Location=new Intent(AdvancedToolsActivity.this, PhoneServiceNumber.class);
+					startActivity(Location);
 					break;
 				default:
 					break;

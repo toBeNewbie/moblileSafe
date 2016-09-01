@@ -16,4 +16,7 @@ public interface myConstantValue {
 	String SIM_NUMBER="sim_number";
 	String MOBILE_SAFE_NUMBER = "mobile_safe_number";
 	String BOOT_COMPLETE = "bootcomplete";
+	
+	String TOAST_X = "toast_x";
+	String TOAST_Y = "toast_y";
 }

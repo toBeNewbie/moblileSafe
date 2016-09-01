@@ -27,11 +27,12 @@
     </com.example.mobilesafe.difineView.SettingCustomView>
 
     <com.example.mobilesafe.difineView.SettingCustomView
+        android:id="@+id/custom_phone_number_display_location_service"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         newbie:bg_custom_selector="first"
-        newbie:display_text="看门狗服务" >
+        newbie:display_text="电话归属地显示服务" >
     </com.example.mobilesafe.difineView.SettingCustomView>
 
     <com.example.mobilesafe.difineView.SettingCustomView

@@ -3,6 +3,7 @@ package com.example.mobilesafe.testUnit;
 import java.util.List;
 
 import com.example.mobilesafe.bean.BlcakListBean;
+import com.example.mobilesafe.bean.PhoneServiceNameBean;
 import com.example.mobilesafe.dao.AddressPhoneLocationDao;
 import com.example.mobilesafe.dao.BlackListDao;
 import com.example.mobilesafe.db.BlackListDB;
@@ -20,7 +21,12 @@ public class readContactsTest extends AndroidTestCase {
 	}
 	
 	public void testLocation(){
-		System.out.println(AddressPhoneLocationDao.getPhoneMessage("18339450881"));
+		List<PhoneServiceNameBean> phoneName = AddressPhoneLocationDao.getPhoneName();
+		
+		for (PhoneServiceNameBean phoneServiceNameBean : phoneName) {
+			
+			System.out.println(AddressPhoneLocationDao.getPhoneNumber(phoneServiceNameBean));
+		}
 	}
 	
 	public void testGetAll(){

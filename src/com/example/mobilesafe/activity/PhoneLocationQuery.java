@@ -7,7 +7,9 @@ import com.example.mobilesafe.utils.ShowToastUtils;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -24,6 +26,29 @@ public class PhoneLocationQuery extends Activity {
 		
 		initView();
 		
+		initEvent();
+	}
+
+	private void initEvent() {
+	 
+		et_queryNumber.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				queryLocation(null);
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				
+			}
+		});
 		
 	}
 
@@ -50,7 +75,14 @@ public class PhoneLocationQuery extends Activity {
 			vibrator.vibrate(new long[]{200,300,200,300}, 3);
 			return;
 		}
-		String phoneStr = AddressPhoneLocationDao.getPhoneMessage(phoneNumber);
-		tv_locationMessage.setText("归属地信息：\n"+phoneStr);
+		
+		try {
+			//解决文本不规范的异常。
+			String phoneStr = AddressPhoneLocationDao.getPhoneMessage(phoneNumber);
+			tv_locationMessage.setText("归属地信息：\n"+phoneStr);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 }

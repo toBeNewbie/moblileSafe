@@ -230,7 +230,7 @@ public class SplashActivity extends Activity {
 			public void onAnimationStart(Animation animation) {
 				
 				cobyDataThread("address.db");
-				
+				cobyDataThread("commonnum.db");
 				// TODO Auto-generated method stub
 				if (splashUtils.getbBoolean(getApplicationContext(),
 						myConstantValue.AUTO_VERSION_UPDATE, false)) {

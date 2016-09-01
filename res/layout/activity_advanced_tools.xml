@@ -27,5 +27,7 @@
         newbie:is_disable_toggle="true"
         newbie:display_text="服务号码查询" >
     </com.example.mobilesafe.difineView.SettingCustomView>
+    
+ 
 
 </LinearLayout>
