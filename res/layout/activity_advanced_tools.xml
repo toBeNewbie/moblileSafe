@@ -60,13 +60,7 @@
           android:layout_marginRight="10dp"
           />
       
-      <com.daimajia.numberprogressbar.NumberProgressBar
-        android:id="@+id/numberbar8"
-        android:layout_width="wrap_content"
-        android:layout_margin="20dp"
-        style="@style/NumberProgressBar_Twinkle_Night"
-        custom:progress_current="80"
-        android:layout_height="wrap_content" />
+     
  
 
 </LinearLayout>
