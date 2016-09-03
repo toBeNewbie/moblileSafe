@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:custom="http://schemas.android.com/apk/com.example.mobilesafe"
     xmlns:newbie="http://schemas.android.com/apk/res/com.example.mobilesafe"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -28,6 +29,44 @@
         newbie:display_text="服务号码查询" >
     </com.example.mobilesafe.difineView.SettingCustomView>
     
+    
+     <com.example.mobilesafe.difineView.SettingCustomView
+        android:id="@+id/custom_advanced_tools_sms_backup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        newbie:bg_custom_selector="last"
+        newbie:is_disable_toggle="true"
+        newbie:display_text="手机短信备份" >
+    </com.example.mobilesafe.difineView.SettingCustomView>
+    
+     
+     
+      <com.example.mobilesafe.difineView.SettingCustomView
+        android:id="@+id/custom_advanced_tools_sms_reduction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        newbie:bg_custom_selector="last"
+        newbie:is_disable_toggle="true"
+        newbie:display_text="手机短信还原" >
+    </com.example.mobilesafe.difineView.SettingCustomView>
+    
+      
+      <ProgressBar 
+          android:id="@+id/pb_display_sms_progress"
+          style="?android:attr/progressBarStyleHorizontal"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          />
+      
+      <com.daimajia.numberprogressbar.NumberProgressBar
+        android:id="@+id/numberbar8"
+        android:layout_width="wrap_content"
+        android:layout_margin="20dp"
+        style="@style/NumberProgressBar_Twinkle_Night"
+        custom:progress_current="80"
+        android:layout_height="wrap_content" />
  
 
 </LinearLayout>

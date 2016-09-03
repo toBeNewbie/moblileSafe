@@ -8,6 +8,7 @@ import com.example.mobilesafe.dao.AddressPhoneLocationDao;
 import com.example.mobilesafe.dao.BlackListDao;
 import com.example.mobilesafe.db.BlackListDB;
 import com.example.mobilesafe.utils.AntiThrefServiceUtils;
+import com.example.mobilesafe.utils.SmsBackupAndReduction;
 
 import android.test.AndroidTestCase;
 
@@ -39,4 +40,9 @@ public class readContactsTest extends AndroidTestCase {
 		BlackListDao dao=new BlackListDao(getContext());
 		System.out.println(dao.getPageData(1, 5));
 	}
+	
+	public void testSms(){
+//		SmsBackupAndReduction.reductionSms(getContext());
+	}
+	
 }
