@@ -224,6 +224,15 @@ public class HomeActivity extends Activity {
 						showEnterDialog();
 					}
 					break;
+					
+					
+				case 2://进入软件管家。
+				{
+					
+					Intent intent = new Intent(HomeActivity.this, SoftwareManager.class);
+					startActivity(intent);
+					break;
+				}
 				
 				case 1://进入通讯卫士界面
 					Intent intent = new Intent(HomeActivity.this, AndroidBlackListActivity.class);

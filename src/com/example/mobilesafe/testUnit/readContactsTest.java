@@ -2,12 +2,14 @@ package com.example.mobilesafe.testUnit;
 
 import java.util.List;
 
+import com.example.mobilesafe.bean.AppInforBean;
 import com.example.mobilesafe.bean.BlcakListBean;
 import com.example.mobilesafe.bean.PhoneServiceNameBean;
 import com.example.mobilesafe.dao.AddressPhoneLocationDao;
 import com.example.mobilesafe.dao.BlackListDao;
 import com.example.mobilesafe.db.BlackListDB;
 import com.example.mobilesafe.utils.AntiThrefServiceUtils;
+import com.example.mobilesafe.utils.GetAppInfoUtils;
 import com.example.mobilesafe.utils.SmsBackupAndReduction;
 
 import android.test.AndroidTestCase;
@@ -43,6 +45,17 @@ public class readContactsTest extends AndroidTestCase {
 	
 	public void testSms(){
 //		SmsBackupAndReduction.reductionSms(getContext());
+		List<AppInforBean> appInfos = GetAppInfoUtils.getInstallAppInfos(getContext());
+		for (AppInforBean appInforBean : appInfos) {
+			System.out.println(appInforBean);
+		}
+	}
+	
+	
+	public void testSpace(){
+		System.out.println("total space............"+GetAppInfoUtils.getTotalSpace());
+		System.out.println("free space..........."+GetAppInfoUtils.getFreeSpace());
+		
 	}
 	
 }

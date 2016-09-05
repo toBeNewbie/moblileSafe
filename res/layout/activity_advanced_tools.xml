@@ -51,16 +51,6 @@
     </com.example.mobilesafe.difineView.SettingCustomView>
     
       
-      <ProgressBar 
-          android:id="@+id/pb_display_sms_progress"
-          style="?android:attr/progressBarStyleHorizontal"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginLeft="10dp"
-          android:layout_marginRight="10dp"
-          />
-      
      
- 
 
 </LinearLayout>

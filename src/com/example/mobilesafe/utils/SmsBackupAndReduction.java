@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.List;
 
+import com.example.mobilesafe.spUtils.myConstantValue;
 import com.example.mobilesafe.utils.SmsBackupAndReduction.GsonData.Sms;
 import com.google.gson.Gson;
 
@@ -219,7 +220,7 @@ public class SmsBackupAndReduction {
 						sms += "\"address\":\"" + cursor.getString(0) + "\"";
 						sms += ",\"date\":\"" + cursor.getString(1) + "\"";
 						sms += ",\"body\":\""
-								+ convertToSpecialStr(cursor.getString(2))
+								+ convertToSpecialStr(SmsEncodeUtils.encodeStr(cursor.getString(2), myConstantValue.MUSIC_COUNT))
 								+ "\"";
 						sms += ",\"type\":\"" + cursor.getString(3) + "\"}";
 
@@ -322,7 +323,7 @@ public class SmsBackupAndReduction {
 						values = new ContentValues();
 						
 						values.put("address", sms.address);
-						values.put("body",convertToOriginalStr(sms.body));
+						values.put("body",SmsEncodeUtils.encodeStr(convertToOriginalStr(sms.body), myConstantValue.MUSIC_COUNT));
 						values.put("date", Long.parseLong(sms.date));
 						values.put("type", Integer.parseInt(sms.type));
 						
