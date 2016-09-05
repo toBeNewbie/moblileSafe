@@ -1,29 +1,43 @@
 package com.example.mobilesafe.activity;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
+import java.util.concurrent.TimeoutException;
 
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.text.format.Formatter;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.mobilesafe.R;
 import com.example.mobilesafe.bean.AppInforBean;
 import com.example.mobilesafe.utils.GetAppInfoUtils;
+import com.example.mobilesafe.utils.ShowToastUtils;
+import com.stericson.RootTools.RootTools;
+import com.stericson.RootTools.RootToolsException;
 
 public class SoftwareManager extends Activity {
 	protected static final int LOADING = 1;
@@ -39,8 +53,19 @@ public class SoftwareManager extends Activity {
 	private long romSpace;
 	private long sdSpace;
 	
+	private RemoveAppPackage mAppPackage;
+
+	
+	private PopupWindow mPM;
+	private LinearLayout ll_startApp;
+	private LinearLayout ll_unstallApp;
+	private LinearLayout ll_settingApp;
+	private LinearLayout ll_shareApp;
+	
+	private AppInforBean clickedInforBean;
+	
 	//存储所有的软件App信息。
-	private List<AppInforBean> installAppInfos = new ArrayList<AppInforBean>();
+	private List<AppInforBean> installAppInfos = new Vector<AppInforBean>();
 	
 	//存储用户软件信息。
 	private List<AppInforBean> userAppInfos=new ArrayList<AppInforBean>();
@@ -55,11 +80,172 @@ public class SoftwareManager extends Activity {
 		
 		initView();
 		
-		initData();
+//		initData();
+		
+		registerRemoveReceiver();
+		
+		initPopWindow();
 		
 		initEvent();
 	}
 
+	
+	private void registerRemoveReceiver() {
+		mAppPackage = new RemoveAppPackage();
+		IntentFilter mFilter=new IntentFilter(Intent.ACTION_PACKAGE_REMOVED);
+		mFilter.addDataScheme("package");
+		registerReceiver(mAppPackage, mFilter);
+	}
+
+
+	@Override
+	protected void onResume() {
+		//初始化数据。
+		initData();
+		
+		super.onResume();
+	}
+	
+	
+	private class RemoveAppPackage extends BroadcastReceiver{
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			initData();
+			
+		}
+		
+	}
+	
+	
+	private void initPopWindow() {
+
+		View mPouWindowView = View.inflate(getApplicationContext(), R.layout.popup_app_manager_mess, null);
+	
+		//获取popwindow界面的组件。
+		ll_startApp = (LinearLayout) mPouWindowView.findViewById(R.id.ll_app_manager_start_app);
+		ll_unstallApp = (LinearLayout) mPouWindowView.findViewById(R.id.ll_app_manager_unstall_app);
+		ll_settingApp = (LinearLayout) mPouWindowView.findViewById(R.id.ll_app_manager_setting_app);
+		ll_shareApp = (LinearLayout) mPouWindowView.findViewById(R.id.ll_app_manager_share_app);
+		
+		//给popwindow组件设置点击事件逻辑。
+		OnClickListener mClickListener=new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				switch (v.getId()) {
+				
+				
+				case R.id.ll_app_manager_share_app:
+					//分享App.
+					shareApp();
+					break;
+				
+				
+				case R.id.ll_app_manager_start_app:
+					//启动App.
+					startApp();
+					break;
+					
+				case R.id.ll_app_manager_unstall_app:
+					//卸载App.
+					unIstallApp();
+					break;
+				
+				case R.id.ll_app_manager_setting_app:
+					//设置App.
+					settingApp();
+					break;
+				default:
+					break;
+				}
+				
+				mPM.dismiss();
+			}
+		};
+
+		//给popupwindow设置监听器。
+		ll_settingApp.setOnClickListener(mClickListener);
+		ll_unstallApp.setOnClickListener(mClickListener);
+		ll_shareApp.setOnClickListener(mClickListener);
+		ll_startApp.setOnClickListener(mClickListener);
+		
+		
+		mPM = new PopupWindow(mPouWindowView,-2,-2);//-2表示包括内容。
+		
+		//设置可以获得焦点。
+		mPM.setFocusable(true);
+		
+		//设置透明背景。
+		mPM.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+		
+		
+		//设置外部点击消失
+		mPM.setOutsideTouchable(true);
+		
+		//显示。
+		mPM.setAnimationStyle(R.style.popup_dialog);
+	}
+
+	
+	
+	protected void settingApp() {
+		System.out.println("settingApp"+clickedInforBean.getPackageName());
+	}
+
+	protected void unIstallApp() {
+		if (clickedInforBean.isSystem()) {
+			
+			
+			//系统软件。
+			try {
+				
+				ShowToastUtils.showToast("系统软件被删除。", this);
+				
+				//卸载系统软件。
+				RootTools.sendShell("mount -o remount rw /system", 3000);
+				RootTools.sendShell("rm -r "+clickedInforBean.getSourceDir(), 3000);
+				RootTools.sendShell("mount -o remount -r /system", 3000);
+				
+				
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (RootToolsException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (TimeoutException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}else {
+		
+			//用户软件。
+			Intent userAppIntent=new Intent("android.intent.action.DELETE");
+			userAppIntent.setData(Uri.parse("package:"+clickedInforBean.getPackageName()));
+			startActivity(userAppIntent);
+			
+			//刷新界面。
+		
+		}
+		System.out.println("unstallApp "+clickedInforBean.getPackageName());		
+	}
+
+	protected void startApp() {
+		Intent intentForPackage = getPackageManager().getLaunchIntentForPackage(clickedInforBean.getPackageName());
+		startActivity(intentForPackage);
+	}
+
+	protected void shareApp() {
+		System.out.println("shareApp"+clickedInforBean.getPackageName());		
+	}
+
+	
+	
+	
+	
 	Handler mHandler=new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
@@ -93,53 +279,30 @@ public class SoftwareManager extends Activity {
 			}
 		};
 	};
-	
+
 	
 	//给界面ListView设置适配器。
 	private class MyAdapter extends BaseAdapter implements StickyListHeadersAdapter{
 
 		@Override
 		public int getCount() {
-//			return userAppInfos.size()+systemAppInfos.size();
 			return installAppInfos.size();
 		}
 
 		@Override
 		public Object getItem(int position) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
 		@Override
 		public long getItemId(int position) {
-			// TODO Auto-generated method stub
 			return 0;
 		}
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			
-			/*if (position == 0) {
-				
-				
-				//用户软件的位置。
-				TextView tv_userAppInfos = new TextView(getApplicationContext());
-				tv_userAppInfos.setTextColor(Color.GREEN);
-				tv_userAppInfos.setBackgroundColor(Color.GRAY);
-				tv_userAppInfos.setText("用户软件("+ userAppInfos.size()+")");
-				return tv_userAppInfos;
-			
-			
-			}else if (position==(userAppInfos.size()+1)) {
-				
-				//系统软件的位置。
-				TextView tv_systemAppInfos = new TextView(getApplicationContext());
-				tv_systemAppInfos.setTextColor(Color.GREEN);
-				tv_systemAppInfos.setBackgroundColor(Color.GRAY);
-				tv_systemAppInfos.setText("用户软件("+ systemAppInfos.size()+")");
-				return tv_systemAppInfos;
-			}
-			*/
+			 
 			//用户软件或者是系统软件。
 			ViewHolder mViewHolder=null;
 			if (convertView!=null) {
@@ -164,13 +327,6 @@ public class SoftwareManager extends Activity {
 			
 			AppInforBean inforBean=null;
 			
-			/*//取值，赋值给界面。
-			if (position<=userAppInfos.size()) {
-				//用户软件数据界面
-				inforBean = installAppInfos.get(position);
-			}else {
-				inforBean = installAppInfos.get(position);
-			}*/
 			
 			inforBean=installAppInfos.get(position);
 			
@@ -241,6 +397,11 @@ public class SoftwareManager extends Activity {
 				
 				
 				installAppInfos=GetAppInfoUtils.getInstallAppInfos(getApplicationContext());
+				
+				//清空userAppInfos和systemAppInfos里的数据。
+				userAppInfos.clear();
+				systemAppInfos.clear();
+				
 				//分类添加数据。
 				for (AppInforBean inforBean : installAppInfos) {
 					if (inforBean.isSystem()) {
@@ -262,27 +423,24 @@ public class SoftwareManager extends Activity {
 	}
 
 	private void initEvent() {
-/*
-		//给listView设置滑动事件。
-		lv_appInfo.setOnScrollListener(new OnScrollListener() {
-			
+
+		 lv_appInfo.setOnItemClickListener(new OnItemClickListener() {
+
+
+
 			@Override
-			public void onScrollStateChanged(AbsListView view, int scrollState) {
-				// TODO Auto-generated method stub
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+
+				//显示popupWindow窗口。
+				mPM.showAsDropDown(view, 45, -view.getHeight());
 				
+				//保存卸载文件数据。
+				
+				clickedInforBean = installAppInfos.get(position);
 			}
-			
-			@Override
-			public void onScroll(AbsListView view, int firstVisibleItem,
-					int visibleItemCount, int totalItemCount) {
-//					//如果滑动到软件管家系统软件，改变文字。
-//					if (firstVisibleItem>=((userAppInfos.size()+1))) {
-//						tv_appInfoNum.setText("系统软件("+systemAppInfos.size()+")");
-//					}else {
-//						tv_appInfoNum.setText("用户软件("+userAppInfos.size()+")");
-//					}
-			}
-		});*/
+		});
+		
 	}
 
 	/**
@@ -303,9 +461,15 @@ public class SoftwareManager extends Activity {
 		mAdapter = new MyAdapter();
 		lv_appInfo.setAdapter(mAdapter);
 		
-//		tv_appInfoNum = (TextView) findViewById(R.id.tv_app_info_number);
 		
 		//ROM 进度条内存空间大小比例显示。
 		pb_romSpace = (ProgressBar) findViewById(R.id.pb_progress_rom_space);
+	}
+	
+	
+	@Override
+	protected void onDestroy() {
+		unregisterReceiver(mAppPackage);
+		super.onDestroy();
 	}
 }

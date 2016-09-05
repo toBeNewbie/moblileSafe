@@ -61,5 +61,11 @@
         //点击对话框外部，消除对话框
         <item name="android:windowCloseOnTouchOutside">true</item>
     </style>
+    
+    
+    <style name="popup_dialog">
+        <item name="android:windowEnterAnimation">@anim/dialog_enter</item>
+        <item name="android:windowExitAnimation">@anim/dialog_exit</item>
+    </style>
 
 </resources>
