@@ -46,6 +46,7 @@ public class SoftwareManager extends Activity {
 	protected static final int FINISH = 2;
 	private LinearLayout ll_progress;
 	private TextView tv_romSpace;
+	private long sdTotalSpace;
 	private TextView tv_sdSpace;
 	private StickyListHeadersListView lv_appInfo;
 	private MyAdapter mAdapter;
@@ -57,6 +58,7 @@ public class SoftwareManager extends Activity {
 	
 	private RemoveAppPackage mAppPackage;
 
+	private ProgressBar pb_sdSpace;
 	
 	private PopupWindow mPM;
 	private LinearLayout ll_startApp;
@@ -305,7 +307,7 @@ public class SoftwareManager extends Activity {
 				
 				//设置进度条的文字样式。
 				pb_romSpace.setProgress((int) (romSpace*100/totalSpace));
-				
+				pb_sdSpace.setProgress((int) (sdSpace*100/sdTotalSpace));
 				//刷新界面。
 				mAdapter.notifyDataSetChanged();
 				break;
@@ -403,7 +405,7 @@ public class SoftwareManager extends Activity {
 		public long getHeaderId(int position) {
 
 			AppInforBean appInforBean = installAppInfos.get(position);
-			if (appInforBean.isSystem()) {
+			if (!appInforBean.isSystem()) {
 				return 1;
 			}else {
 				return 2;
@@ -424,13 +426,21 @@ public class SoftwareManager extends Activity {
 		new Thread(){
 
 
+
+
 			public void run() {
 				//发送加载数据的消息。
 				mHandler.obtainMessage(LOADING).sendToTarget();
-				romSpace = GetAppInfoUtils.getFreeSpace();
-				sdSpace = GetAppInfoUtils.getSdFreeSpace();
-				totalSpace = GetAppInfoUtils.getTotalSpace();
 				
+				//获取rom手机剩余内存空间。
+				romSpace = GetAppInfoUtils.getFreeSpace();
+				//获取手机内存的总空间。
+				totalSpace = GetAppInfoUtils.getRomTotalSpace();
+				
+				//获取sd卡的剩余空间。
+				sdSpace = GetAppInfoUtils.getSdFreeSpace();
+				//获得Sd卡的总内存空间。
+				sdTotalSpace = GetAppInfoUtils.getSdTotalSpace();
 				
 				installAppInfos=GetAppInfoUtils.getInstallAppInfos(getApplicationContext());
 				
@@ -500,6 +510,8 @@ public class SoftwareManager extends Activity {
 		
 		//ROM 进度条内存空间大小比例显示。
 		pb_romSpace = (ProgressBar) findViewById(R.id.pb_progress_rom_space);
+	
+		pb_sdSpace = (ProgressBar) findViewById(R.id.pb_progress_sd_space);
 	}
 	
 	

@@ -11,6 +11,7 @@ import com.example.mobilesafe.db.BlackListDB;
 import com.example.mobilesafe.utils.AntiThrefServiceUtils;
 import com.example.mobilesafe.utils.GetAppInfoUtils;
 import com.example.mobilesafe.utils.SmsBackupAndReduction;
+import com.example.mobilesafe.utils.TastInfosUtils;
 
 import android.test.AndroidTestCase;
 
@@ -53,9 +54,7 @@ public class readContactsTest extends AndroidTestCase {
 	
 	
 	public void testSpace(){
-		System.out.println("total space............"+GetAppInfoUtils.getTotalSpace());
-		System.out.println("free space..........."+GetAppInfoUtils.getFreeSpace());
-		
+			System.out.println(TastInfosUtils.getAllRunningInfos(getContext()));
 	}
 	
 }

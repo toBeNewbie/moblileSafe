@@ -10,6 +10,21 @@ public class AppInforBean {
 	private String packageName;		//应用程序包名。
 	private long AppTakeUpSize;		//应用程序占用的空间。
 	private String sourceDir;		//应用程序安装路径。
+	
+	private long appRunningSize;	//占用的内存大小。
+	private boolean isChecked;
+	public boolean isChecked() {
+		return isChecked;
+	}
+	public void setChecked(boolean isChecked) {
+		this.isChecked = isChecked;
+	}
+	public long getAppRunningSize() {
+		return appRunningSize;
+	}
+	public void setAppRunningSize(long appRunningSize) {
+		this.appRunningSize = appRunningSize;
+	}
 	public Drawable getIcon() {
 		return icon;
 	}

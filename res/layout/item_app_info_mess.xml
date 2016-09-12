@@ -33,7 +33,6 @@
 	        />
 	</LinearLayout>
     
-	
 	<TextView 
 	    android:id="@+id/tv_app_take_space"
 	    android:layout_width="wrap_content"

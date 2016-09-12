@@ -28,6 +28,7 @@ import com.example.mobilesafe.bean.homeToolsBean;
 import com.example.mobilesafe.spUtils.myConstantValue;
 import com.example.mobilesafe.spUtils.splashUtils;
 import com.example.mobilesafe.utils.MD5utils;
+import com.example.mobilesafe.utils.ShowToastUtils;
 import com.nineoldandroids.animation.ObjectAnimator;
 
 public class HomeActivity extends Activity {
@@ -225,6 +226,10 @@ public class HomeActivity extends Activity {
 					}
 					break;
 					
+				case 1://进入通讯卫士界面
+					Intent Blackintent = new Intent(HomeActivity.this, AndroidBlackListActivity.class);
+					startActivity(Blackintent);
+					break;
 					
 				case 2://进入软件管家。
 				{
@@ -233,11 +238,21 @@ public class HomeActivity extends Activity {
 					startActivity(intent);
 					break;
 				}
-				
-				case 1://进入通讯卫士界面
-					Intent intent = new Intent(HomeActivity.this, AndroidBlackListActivity.class);
-					startActivity(intent);
+	
+				case 3://进入进程管理界面。
+					long endNext=System.currentTimeMillis();
+					if ((splashUtils.getLong(getApplicationContext(), myConstantValue.ENTER_TASK_TIME, 0l))==0) {
+						Intent processIntent=new Intent(HomeActivity.this, TaskProcessManager.class);
+						startActivity(processIntent);
+					}else if((endNext-splashUtils.getLong(getApplicationContext(), myConstantValue.ENTER_TASK_TIME, 0))<=30000){
+						
+						ShowToastUtils.showToast("你的手机已经非常干净，不需要清理", HomeActivity.this);
+					}else {
+						Intent processIntent=new Intent(HomeActivity.this, TaskProcessManager.class);
+						startActivity(processIntent);
+					}
 					break;
+				
 					
 				case 7://进入魔法革工具界面
 					Intent advacedTools = new Intent(HomeActivity.this, AdvancedToolsActivity.class);

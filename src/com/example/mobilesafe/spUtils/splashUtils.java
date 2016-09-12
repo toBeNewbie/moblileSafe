@@ -47,5 +47,17 @@ public class splashUtils {
 		return sharedPreferences.getInt(key, defValue);
 	}
 	
+	
+	public static void putLong(Context context,String key, long value){
+		SharedPreferences sharedPreferences = context.getSharedPreferences(myConstantValue.SPL_FILE_CONFIGUE_NAME, Context.MODE_PRIVATE);
+		sharedPreferences.edit().putLong(key, value).commit();
+		}
+	
+	
+	public static long getLong(Context context,String key, long defValue){
+		SharedPreferences sharedPreferences = context.getSharedPreferences(myConstantValue.SPL_FILE_CONFIGUE_NAME, Context.MODE_PRIVATE);
+		return sharedPreferences.getLong(key, defValue);
+	}
+	
 
 }

@@ -4,9 +4,25 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        style="@style/title_style"
-        android:text="软件管家" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            style="@style/title_style"
+            android:text="进程管理" />
+        
+       
+        <ImageView 
+            android:onClick="cleanTaskCache"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/task_cb_clean_selector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dip"
+            />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,14 +34,14 @@
             android:layout_height="wrap_content" >
 
             <ProgressBar
-                android:id="@+id/pb_progress_rom_space"
+                android:id="@+id/pb_task_progress_process_num"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:progressDrawable="@drawable/progress_horizontal" />
 
             <TextView
-                android:id="@+id/tv_display_rom_space"
+                android:id="@+id/tv_task_display_process_num"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -37,14 +53,14 @@
             android:layout_height="wrap_content" >
 
             <ProgressBar
-                android:id="@+id/pb_progress_sd_space"
+                android:id="@+id/pb_task_progress_memory_space"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:progressDrawable="@drawable/progress_horizontal" />
 
             <TextView
-                android:id="@+id/tv_display_sd_space"
+                android:id="@+id/tv_task_display_memory_space"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -54,15 +70,42 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="0dp"
+         android:layout_weight="1"
+         >
 
         <se.emilsjolander.stickylistheaders.StickyListHeadersListView
-            android:id="@+id/lv_app_info_manager"
+            android:id="@+id/lv_task_app_info_manager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone" />
 
         <include layout="@layout/progressbar_circle" />
     </FrameLayout>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        
+        <Button 
+            android:onClick="selectAll"
+            android:layout_width="0dp"
+            android:background="@drawable/dialog_set_password_selector"
+            android:layout_height="wrap_content"
+            android:text="全选"
+        	android:layout_weight="1"
+            />
+        
+        <Button 
+            android:onClick="reverseSelect"
+            android:background="@drawable/dialog_set_password_selector"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="反选"
+            android:layout_weight="1"
+            />
+        
+    </LinearLayout>
 
 </LinearLayout>

@@ -24,4 +24,7 @@ public interface myConstantValue {
 	String PHONE_LOCATION_STYLE_INDEX="phoneLocationStyleIndex";
 	
 	byte MUSIC_COUNT=99;
+	
+	
+	String ENTER_TASK_TIME="enterTaskTime";
 }

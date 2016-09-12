@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <ImageView
+        android:id="@+id/iv_task_app_info_icon"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_margin="5dip"
+        android:src="@drawable/icon" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_margin="5dip"
+        android:layout_toRightOf="@id/iv_task_app_info_icon"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tv_task_app_name_mess"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="软件管家" />
+
+        <TextView
+            android:id="@+id/tv_task_app_location_mess"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="系统空间" />
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/cb_task_app_is_selected"
+        android:button="@drawable/cb_selector"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:focusable="false" />
+
+</RelativeLayout>
