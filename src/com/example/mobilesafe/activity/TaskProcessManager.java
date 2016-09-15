@@ -8,12 +8,15 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.format.Formatter;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -23,12 +26,19 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.SlidingDrawer;
+import android.widget.SlidingDrawer.OnDrawerCloseListener;
+import android.widget.SlidingDrawer.OnDrawerOpenListener;
 import android.widget.TextView;
 
 import com.example.mobilesafe.R;
 import com.example.mobilesafe.bean.AppInforBean;
+import com.example.mobilesafe.difineView.SettingCustomView;
+import com.example.mobilesafe.difineView.SettingCustomView.onToggleChangeListener;
+import com.example.mobilesafe.service.LockScreenCleanTaskService;
 import com.example.mobilesafe.spUtils.myConstantValue;
 import com.example.mobilesafe.spUtils.splashUtils;
+import com.example.mobilesafe.utils.AntiThrefServiceUtils;
 import com.example.mobilesafe.utils.ShowToastUtils;
 import com.example.mobilesafe.utils.TastInfosUtils;
 
@@ -43,9 +53,19 @@ public class TaskProcessManager extends Activity {
 	private MyAdapter myAdapter;
 	private StickyListHeadersListView mHeadersListView;
 	private LinearLayout ll_progress;
+	private SlidingDrawer sd_task;
+	private ImageView iv_drawer1;
+	private ImageView iv_drawer2;
 	
 	private long availMem;
 	private long totalMem;
+	
+	private AlphaAnimation aa1;
+	private AlphaAnimation aa2;
+	private SettingCustomView scv_showSystemProcess;
+	private SettingCustomView scv_lockScreen;
+
+
 
 	private int processTotalNum;
 	private int processRunningNum;
@@ -64,10 +84,33 @@ public class TaskProcessManager extends Activity {
 
 		initView();
 
-
-		initData();
-
 		initEvent();
+		
+//		initData();
+		
+		initAnimation();
+		
+		//初始化界面开始动画
+		showDown();
+
+	}
+
+
+	@Override
+	protected void onResume() {
+		initData();
+		super.onResume();
+	}
+
+	
+	private void initAnimation() {
+		aa1 = new AlphaAnimation(0.5f, 1.0f);
+		aa2 = new AlphaAnimation(1.0f, 0.5f);
+		aa1.setDuration(500);
+		aa2.setDuration(500);
+		
+		aa1.setRepeatCount(Animation.INFINITE);
+		aa2.setRepeatCount(Animation.INFINITE);
 	}
 
 	/**
@@ -89,7 +132,30 @@ public class TaskProcessManager extends Activity {
 		
 	}
 		
+	/**
+	 * 抽屉向上拉伸状态
+	 */
+	public void showUp(){
+		
+		iv_drawer1.clearAnimation();
+		iv_drawer2.clearAnimation();
+		
+		iv_drawer1.setImageResource(R.drawable.drawer_arrow_down);
+		iv_drawer2.setImageResource(R.drawable.drawer_arrow_down);
+	}
+	
 
+	/**
+	 * 抽屉菜单初始化动画
+	 */
+	public void showDown(){
+
+		iv_drawer1.setImageResource(R.drawable.drawer_arrow_up);
+		iv_drawer2.setImageResource(R.drawable.drawer_arrow_up);
+		
+		iv_drawer1.startAnimation(aa1);
+		iv_drawer2.startAnimation(aa2);
+	}
 
 	/**
 	 * 反选
@@ -164,6 +230,55 @@ public class TaskProcessManager extends Activity {
 	}
 	
 	private void initEvent() {
+		
+		/**
+		 * 抽屜菜单的点击事件
+		 */
+		scv_showSystemProcess.setOnToggleListener(new onToggleChangeListener() {
+			
+			@Override
+			public void toggleChange(View view, boolean isOpen) {
+				//记录被选择的状态
+				splashUtils.putBoolean(getApplicationContext(), myConstantValue.SHOW_SYSTEM_PROCESS ,isOpen);
+				
+				//刷新界面
+				myAdapter.notifyDataSetChanged();
+			}
+		});
+		scv_lockScreen.setOnToggleListener(new onToggleChangeListener() {
+			
+			@Override
+			public void toggleChange(View view, boolean isOpen) {
+				if (isOpen) {
+					Intent serviceIntent = new Intent(TaskProcessManager.this, LockScreenCleanTaskService.class);
+					startService(serviceIntent);
+				}else {
+					Intent serviceIntent = new Intent(TaskProcessManager.this, LockScreenCleanTaskService.class);
+					stopService(serviceIntent);
+				}
+				
+			}
+		});
+		
+		//给抽屉菜单添加点击事件
+		sd_task.setOnDrawerOpenListener(new OnDrawerOpenListener() {
+			
+			@Override
+			public void onDrawerOpened() {
+				showUp();
+				
+			}
+		});
+		
+		sd_task.setOnDrawerCloseListener(new OnDrawerCloseListener() {
+			
+			@Override
+			public void onDrawerClosed() {
+				// TODO Auto-generated method stub
+				showDown();
+			}
+		});
+		
 		// 给listView添加点击事件。
 		mHeadersListView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -227,7 +342,6 @@ public class TaskProcessManager extends Activity {
 		
 	};
 
-
 	public void taskInfoMess() {
 
 		tv_progressNum.setText("运行的总进程：" + processTotalNum);
@@ -249,6 +363,14 @@ public class TaskProcessManager extends Activity {
 	
 	
 	private void initData() {
+		
+		//初始化锁屏清理
+		scv_lockScreen.setToggleOn(AntiThrefServiceUtils.serviceRunning(getApplicationContext(), "com.example.mobilesafe.service.LockScreenCleanTaskService"));
+		
+		//初始化是否显示系统进程
+		scv_showSystemProcess.setToggleOn(splashUtils.getbBoolean(getApplicationContext(), myConstantValue.SHOW_SYSTEM_PROCESS, false));
+		
+		
 		new Thread() {
 
 			public void run() {
@@ -258,6 +380,10 @@ public class TaskProcessManager extends Activity {
 
 				allRunningInfos = TastInfosUtils
 						.getAllRunningInfos(getApplicationContext());
+				
+				userAppInforBeans.clear();
+				sysAppInforBeans.clear();
+				
 				for (AppInforBean appInforBean : allRunningInfos) {
 					if (!appInforBean.isSystem()) {
 						userAppInforBeans.add(appInforBean);
@@ -273,8 +399,6 @@ public class TaskProcessManager extends Activity {
 				// 发送加载数据完成。
 				mHandler.obtainMessage(FINISH).sendToTarget();
 				
-				// 刷新数据
-				myAdapter.notifyDataSetChanged();
 			};
 		}.start();
 
@@ -285,8 +409,12 @@ public class TaskProcessManager extends Activity {
 
 		@Override
 		public int getCount() {
-			// TODO Auto-generated method stub
-			return allRunningInfos.size();
+			if (splashUtils.getbBoolean(getApplicationContext(), myConstantValue.SHOW_SYSTEM_PROCESS, true)) {
+				
+				return allRunningInfos.size();
+			}else {
+				return userAppInforBeans.size();
+			}
 		}
 
 		@Override
@@ -430,6 +558,17 @@ public class TaskProcessManager extends Activity {
 		ll_progress = (LinearLayout) findViewById(R.id.ll_progressbar_root);
 
 		manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+		
+		
+		iv_drawer1 = (ImageView) findViewById(R.id.iv_task_drawer_1);
+		iv_drawer2 = (ImageView) findViewById(R.id.iv_task_drawer_2);
+		
+		
+		sd_task = (SlidingDrawer) findViewById(R.id.slidingDrawer1);
+		
+		
+		scv_showSystemProcess = (SettingCustomView) findViewById(R.id.scv_task_show_system_process);
+		scv_lockScreen = (SettingCustomView) findViewById(R.id.scv_task_lock_screen_process);
 	}
 
 	

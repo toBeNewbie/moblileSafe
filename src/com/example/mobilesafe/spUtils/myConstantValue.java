@@ -27,4 +27,6 @@ public interface myConstantValue {
 	
 	
 	String ENTER_TASK_TIME="enterTaskTime";
+	
+	String SHOW_SYSTEM_PROCESS="showSystemProcess";
 }

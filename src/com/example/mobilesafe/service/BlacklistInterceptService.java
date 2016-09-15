@@ -3,11 +3,14 @@ package com.example.mobilesafe.service;
 import java.lang.reflect.Method;
 
 import com.android.internal.telephony.ITelephony;
+import com.example.mobilesafe.R;
 import com.example.mobilesafe.dao.BlackListDao;
 import com.example.mobilesafe.dao.ReadContactDao;
 import com.example.mobilesafe.db.BlackListDB;
 
 import android.R.integer;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -66,6 +69,9 @@ public class BlacklistInterceptService extends Service {
 	@Override
 	public void onCreate() {
 
+		//提高服务级别
+		improveServiceLevel();
+		
 		mBlackListDao = new BlackListDao(getApplicationContext());
 
 		// 注册短信拦截服务。
@@ -77,6 +83,16 @@ public class BlacklistInterceptService extends Service {
 		// 开启服务。
 		System.out.println("服务已经开启.............");
 		super.onCreate();
+	}
+
+	private void improveServiceLevel() {
+		Notification notification=new Notification(R.drawable.icon, "魔法革", 0);
+		Intent intent =new Intent();
+		intent.setAction("www.newbie.com");
+		PendingIntent contentIntent=PendingIntent.getActivity(getApplicationContext(), 1, intent , 0);
+		notification.setLatestEventInfo(this, "魔法革", "打开魔法革主界面", contentIntent);
+		startForeground(1, notification);
+		
 	}
 
 	// 注册电话拦截服务。
