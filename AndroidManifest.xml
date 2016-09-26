@@ -5,7 +5,7 @@
     android:versionName="魔 法 革" >
 
     <uses-sdk
-        android:minSdkVersion="14"
+        android:minSdkVersion="16"
         android:targetSdkVersion="21" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -149,6 +149,8 @@
         </activity>
         <activity android:name="com.example.mobilesafe.activity.PhoneLocationQuery" >
         </activity>
+        
+        <activity android:name="com.example.mobilesafe.activity.AntiVirusActivity"></activity>
 
         <service android:name="com.example.mobilesafe.service.AntiThrefService" >
         </service>

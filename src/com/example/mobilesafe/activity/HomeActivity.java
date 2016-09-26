@@ -254,6 +254,12 @@ public class HomeActivity extends Activity {
 					break;
 				
 					
+				case 5://进入手机病毒查杀界面
+				{
+					Intent antiVirusIntent=new Intent(HomeActivity.this, AntiVirusActivity.class);
+					startActivity(antiVirusIntent);
+				}
+					break;
 				case 7://进入魔法革工具界面
 					Intent advacedTools = new Intent(HomeActivity.this, AdvancedToolsActivity.class);
 					startActivity(advacedTools);

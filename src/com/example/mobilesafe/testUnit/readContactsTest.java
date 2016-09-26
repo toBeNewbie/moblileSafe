@@ -10,6 +10,7 @@ import com.example.mobilesafe.dao.BlackListDao;
 import com.example.mobilesafe.db.BlackListDB;
 import com.example.mobilesafe.utils.AntiThrefServiceUtils;
 import com.example.mobilesafe.utils.GetAppInfoUtils;
+import com.example.mobilesafe.utils.GetFileMD5;
 import com.example.mobilesafe.utils.SmsBackupAndReduction;
 import com.example.mobilesafe.utils.TastInfosUtils;
 
@@ -54,7 +55,8 @@ public class readContactsTest extends AndroidTestCase {
 	
 	
 	public void testSpace(){
-			System.out.println(TastInfosUtils.getAllRunningInfos(getContext()));
+			System.out.println("....................");
+			System.out.println(GetFileMD5.fileMD5("address.db"));
 	}
 	
 }

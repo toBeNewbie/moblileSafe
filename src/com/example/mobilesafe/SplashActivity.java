@@ -231,6 +231,7 @@ public class SplashActivity extends Activity {
 				
 				cobyDataThread("address.db");
 				cobyDataThread("commonnum.db");
+				cobyDataThread("antivirus.db");
 				// TODO Auto-generated method stub
 				if (splashUtils.getbBoolean(getApplicationContext(),
 						myConstantValue.AUTO_VERSION_UPDATE, false)) {

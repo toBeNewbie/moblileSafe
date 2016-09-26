@@ -6,6 +6,11 @@
     <string name="action_settings">Settings</string>
 	<string name="download_url">http://192.168.1.102:8080/versionInfo.json</string>
 	
+	<!-- 病毒库版本号下载地址 -->
+	<string name="virus_update_url_version">http://192.168.1.102:8080/</string>
+	
+	<!-- 最新病毒库更新数据地址 -->
+	<string name="virus_update_url_content">http://192.168.1.102:8080/json.html</string>
 	<string name="sample_device_admin">安全卫士</string>
 	<string name="sample_device_admin_description">远程锁频,清理数据</string>
 </resources>
