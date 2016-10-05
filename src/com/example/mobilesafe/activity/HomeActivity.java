@@ -260,6 +260,15 @@ public class HomeActivity extends Activity {
 					startActivity(antiVirusIntent);
 				}
 					break;
+					
+				case 6://进入缓存清理界面
+				{
+					Intent cacheIntent=new Intent(HomeActivity.this, CacheCleanActivity.class);
+					
+					startActivity(cacheIntent);
+				}
+					break;
+					
 				case 7://进入魔法革工具界面
 					Intent advacedTools = new Intent(HomeActivity.this, AdvancedToolsActivity.class);
 					startActivity(advacedTools);

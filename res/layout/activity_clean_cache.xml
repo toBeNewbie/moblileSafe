@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/title_bkg"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <!-- 清理缓存标题 -->
+
+            <TextView
+                style="@style/title_style"
+                android:background="#00000000"
+                android:text="缓存清理" />
+
+            <!-- 清理缓存按钮 -->
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dip"
+                android:onClick="cleanAppCache"
+                android:src="@drawable/task_cb_clean_selector" />
+        </RelativeLayout>
+
+        <!-- 显示扫描动画 -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_scanner_malware" />
+
+                <ImageView
+                    android:id="@+id/iv_clean_cache_scanning"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/act_scanning_03" />
+            </FrameLayout>
+            <!-- 显示扫描的进度和信息 -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/tv_clean_cache_scanning_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="正在扫描xxxx" />
+
+                <ProgressBar
+                    android:id="@+id/pb_clean_cache_process"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <!-- 显示扫描的结果信息 -->
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <LinearLayout
+                android:id="@+id/ll_clean_cache_items"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+            </LinearLayout>
+        </ScrollView>
+        
+        <TextView 
+            android:id="@+id/tv_no_cache_mess"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:text="手机很干净，没有缓存"
+            />
+    </FrameLayout>
+
+</LinearLayout>
