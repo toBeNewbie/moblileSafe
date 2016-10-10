@@ -14,6 +14,14 @@ public class AppInforBean {
 	private long appRunningSize;	//占用的内存大小。
 	private boolean isChecked;
 	
+	private int uid;
+	
+	public int getUid() {
+		return uid;
+	}
+	public void setUid(int uid) {
+		this.uid = uid;
+	}
 	public AppInforBean(String packageName){
 		
 		this.packageName=packageName;

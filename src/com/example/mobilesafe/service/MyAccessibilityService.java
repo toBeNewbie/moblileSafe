@@ -15,7 +15,7 @@ import android.view.accessibility.AccessibilityEvent;
  * @author Administrator
  * @company Newbie
  * @date 2016-10-9
- * @des 辅助功能电子狗服务
+ * @des 	辅助功能电子狗服务
  */
 public class MyAccessibilityService extends AccessibilityService {
 
@@ -27,6 +27,7 @@ public class MyAccessibilityService extends AccessibilityService {
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
+			//获得应用包名
 			masterApp = intent.getStringExtra("master");
 		}
 

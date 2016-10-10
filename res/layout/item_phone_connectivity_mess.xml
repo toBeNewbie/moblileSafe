@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+    
+	<ImageView 
+	    android:layout_margin="5dip"
+	    android:id="@+id/iv_phone_connectivity_icon"
+	    android:layout_width="45dp"
+	    android:layout_height="45dp"
+	    android:src="@drawable/icon"
+	    />
+	
+	<LinearLayout 
+	    android:layout_margin="5dip"
+	    android:layout_toRightOf="@id/iv_phone_connectivity_icon"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical"
+	    android:layout_centerVertical="true"
+	    >
+	    <TextView 
+	        android:id="@+id/tv_phone_connectivity_rcv"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="接收流量：24M"
+	        />
+	    <TextView 
+	        android:id="@+id/tv_phone_connectivity_snd"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="发送流量：24M"
+	        />
+	</LinearLayout>
+    
+	<TextView 
+	    android:id="@+id/tv_phone_connectivity_type"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"
+		android:layout_centerVertical="true"
+		android:layout_margin="5dip"
+	    android:text="WIFI"
+	    />
+	
+	
+	
+</RelativeLayout>

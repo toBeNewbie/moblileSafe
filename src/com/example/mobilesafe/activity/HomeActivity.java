@@ -254,6 +254,13 @@ public class HomeActivity extends Activity {
 					break;
 				
 					
+					
+				case 4://进入流量查询界面
+				{
+					Intent connectivityIntent=new Intent(HomeActivity.this, ConnectivityPhoneActivity.class);
+					startActivity(connectivityIntent);
+				}
+					break;
 				case 5://进入手机病毒查杀界面
 				{
 					Intent antiVirusIntent=new Intent(HomeActivity.this, AntiVirusActivity.class);

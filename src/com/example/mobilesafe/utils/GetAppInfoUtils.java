@@ -97,7 +97,8 @@ public class GetAppInfoUtils {
 		}
 		
 		
-		
+		//设置应用程序的uid。
+		inforBean.setUid(applicationInfo.uid);
 		//安装路径。
 		inforBean.setSourceDir(applicationInfo.sourceDir);
 		
