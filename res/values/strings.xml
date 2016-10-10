@@ -13,4 +13,7 @@
 	<string name="virus_update_url_content">http://192.168.1.102:8080/json.html</string>
 	<string name="sample_device_admin">安全卫士</string>
 	<string name="sample_device_admin_description">远程锁频,清理数据</string>
+	
+	<string name="accessibility_service_label">看门狗服务</string>
+	<string name="accessibility_service_description">开启魔法革程序锁拦截服务</string>
 </resources>

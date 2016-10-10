@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:custom="http://schemas.android.com/apk/com.example.mobilesafe"
+    xmlns:custom="http://schemas.android.com/apk/com.example.mobilesafe"
     xmlns:newbie="http://schemas.android.com/apk/res/com.example.mobilesafe"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,41 +16,64 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         newbie:bg_custom_selector="first"
-        newbie:is_disable_toggle="true"
-        newbie:display_text="电话归属地查询" >
+        newbie:display_text="电话归属地查询"
+        newbie:is_disable_toggle="true" >
     </com.example.mobilesafe.difineView.SettingCustomView>
-    
+
     <com.example.mobilesafe.difineView.SettingCustomView
         android:id="@+id/custom_advanced_tools_phoneservice_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         newbie:bg_custom_selector="last"
-        newbie:is_disable_toggle="true"
-        newbie:display_text="服务号码查询" >
+        newbie:display_text="服务号码查询"
+        newbie:is_disable_toggle="true" >
     </com.example.mobilesafe.difineView.SettingCustomView>
-    
-    
-     <com.example.mobilesafe.difineView.SettingCustomView
+
+    <com.example.mobilesafe.difineView.SettingCustomView
         android:id="@+id/custom_advanced_tools_sms_backup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        newbie:bg_custom_selector="last"
-        newbie:is_disable_toggle="true"
-        newbie:display_text="手机短信备份" >
+        newbie:bg_custom_selector="first"
+        newbie:display_text="手机短信备份"
+        newbie:is_disable_toggle="true" >
     </com.example.mobilesafe.difineView.SettingCustomView>
-    
-     
-     
-      <com.example.mobilesafe.difineView.SettingCustomView
+
+    <com.example.mobilesafe.difineView.SettingCustomView
         android:id="@+id/custom_advanced_tools_sms_reduction"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         newbie:bg_custom_selector="last"
-        newbie:is_disable_toggle="true"
-        newbie:display_text="手机短信还原" >
+        newbie:display_text="手机短信还原"
+        newbie:is_disable_toggle="true" >
     </com.example.mobilesafe.difineView.SettingCustomView>
-    
-      
-     
+
+    <com.example.mobilesafe.difineView.SettingCustomView
+        android:id="@+id/custom_advanced_tools_app_locked"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        newbie:bg_custom_selector="first"
+        newbie:is_disable_toggle="true"
+        newbie:display_text="应用程序锁">
+    </com.example.mobilesafe.difineView.SettingCustomView>
+
+
+	  <com.example.mobilesafe.difineView.SettingCustomView
+        android:id="@+id/custom_advanced_tools_dag_door_first"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        newbie:bg_custom_selector="middle"
+        newbie:is_disable_toggle="false"
+        newbie:display_text="看门狗服务(accessibilty)" >
+    </com.example.mobilesafe.difineView.SettingCustomView>
+
+	  
+	    <com.example.mobilesafe.difineView.SettingCustomView
+        android:id="@+id/custom_advanced_tools_dag_door_second"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        newbie:bg_custom_selector="last"
+        newbie:is_disable_toggle="false"
+        newbie:display_text="看门狗服务(2)" >
+    </com.example.mobilesafe.difineView.SettingCustomView>
 
 </LinearLayout>

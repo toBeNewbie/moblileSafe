@@ -13,6 +13,36 @@ public class AppInforBean {
 	
 	private long appRunningSize;	//占用的内存大小。
 	private boolean isChecked;
+	
+	public AppInforBean(String packageName){
+		
+		this.packageName=packageName;
+	}
+	public AppInforBean(){
+		
+	}
+	
+	
+	
+	@Override
+	public boolean equals(Object o) {
+
+		if (o instanceof AppInforBean) {
+			AppInforBean appInforBean=(AppInforBean) o;
+			return this.packageName.equals(appInforBean.getPackageName());
+		}
+		return super.equals(o);
+	}
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return packageName.hashCode();
+	}
+	
+	
+	
+	
+	
 	public boolean isChecked() {
 		return isChecked;
 	}

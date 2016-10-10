@@ -10,8 +10,11 @@ import android.widget.ProgressBar;
 import com.example.mobilesafe.R;
 import com.example.mobilesafe.difineView.SettingCustomView;
 import com.example.mobilesafe.difineView.SettingCustomView.onToggleChangeListener;
+import com.example.mobilesafe.service.WatchDogThreadService;
+import com.example.mobilesafe.utils.AntiThrefServiceUtils;
 import com.example.mobilesafe.utils.SmsBackupAndReduction;
 import com.example.mobilesafe.utils.SmsBackupAndReduction.SmsBackupReductionListener;
+import com.example.mobilesafe.utils.TastInfosUtils;
 
 public class AdvancedToolsActivity extends Activity {
 
@@ -20,6 +23,9 @@ public class AdvancedToolsActivity extends Activity {
 	private SettingCustomView smsReduction;
 	private SettingCustomView smsBackup;
 	private ProgressBar pbSmsProgress;
+	private SettingCustomView sci_appLocked;
+	private SettingCustomView sci_doorDog_fir;
+	private SettingCustomView sci_doorDog_sec;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +36,18 @@ public class AdvancedToolsActivity extends Activity {
 		
 		initEvent();
 		
+		initData();
+		
+	}
+
+	private void initData() {
+		// TODO Auto-generated method stub
+		sci_doorDog_fir.setToggleOn(AntiThrefServiceUtils.serviceRunning(getApplicationContext(),
+									"com.example.mobilesafe.service.MyAccessibilityService"));
+		
+		
+		sci_doorDog_sec.setToggleOn(AntiThrefServiceUtils.serviceRunning(getApplicationContext(),
+							"com.example.mobilesafe.service.WatchDogThreadService"));
 	}
 
 	private void initEvent() {
@@ -59,6 +77,28 @@ public class AdvancedToolsActivity extends Activity {
 					reductionSms();
 
 					break;
+					
+				case R.id.custom_advanced_tools_app_locked://程序锁服务
+					
+					Intent applockedIntent=new Intent(AdvancedToolsActivity.this, AppLockedActivity.class);
+					startActivity(applockedIntent);
+					
+					break;
+					
+				case R.id.custom_advanced_tools_dag_door_first://看门狗服务（1）
+					break;
+					
+				case R.id.custom_advanced_tools_dag_door_second://看门狗服务（2）
+					if (isOpen) {
+						//开启服务
+						Intent watchDog=new Intent(getApplicationContext(), WatchDogThreadService.class);
+						startService(watchDog);
+					}else {
+						//关闭服务
+						Intent watchDog=new Intent(getApplicationContext(), WatchDogThreadService.class);
+						stopService(watchDog);
+					}
+					break;
 				default:
 					break;
 				}
@@ -72,6 +112,10 @@ public class AdvancedToolsActivity extends Activity {
 		customPhoneService.setOnToggleListener(toggleChangeListener);
 		smsBackup.setOnToggleListener(toggleChangeListener);
 		smsReduction.setOnToggleListener(toggleChangeListener);
+		
+		sci_appLocked.setOnToggleListener(toggleChangeListener);
+		sci_doorDog_fir.setOnToggleListener(toggleChangeListener);
+		sci_doorDog_sec.setOnToggleListener(toggleChangeListener);
 		
 	}
 
@@ -159,5 +203,13 @@ public class AdvancedToolsActivity extends Activity {
 		smsReduction = (SettingCustomView) findViewById(R.id.custom_advanced_tools_sms_reduction);
 		
 		
+		//程序锁条目
+		
+		sci_appLocked = (SettingCustomView) findViewById(R.id.custom_advanced_tools_app_locked);
+		
+		//看门狗服务组件
+		
+		sci_doorDog_fir = (SettingCustomView) findViewById(R.id.custom_advanced_tools_dag_door_first);
+		sci_doorDog_sec = (SettingCustomView) findViewById(R.id.custom_advanced_tools_dag_door_second);
 	}
 }

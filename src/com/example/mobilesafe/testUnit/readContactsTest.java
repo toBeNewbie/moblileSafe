@@ -7,7 +7,9 @@ import com.example.mobilesafe.bean.BlcakListBean;
 import com.example.mobilesafe.bean.PhoneServiceNameBean;
 import com.example.mobilesafe.dao.AddressPhoneLocationDao;
 import com.example.mobilesafe.dao.BlackListDao;
+import com.example.mobilesafe.dao.LockedDataDao;
 import com.example.mobilesafe.db.BlackListDB;
+import com.example.mobilesafe.db.LockedDataDB;
 import com.example.mobilesafe.utils.AntiThrefServiceUtils;
 import com.example.mobilesafe.utils.GetAppInfoUtils;
 import com.example.mobilesafe.utils.GetFileMD5;
@@ -55,8 +57,9 @@ public class readContactsTest extends AndroidTestCase {
 	
 	
 	public void testSpace(){
-			System.out.println("....................");
-			System.out.println(GetFileMD5.fileMD5("address.db"));
+			LockedDataDao dataDao=new LockedDataDao(getContext());
+			dataDao.addLockedPackName("newbie.jay.chou");
+			System.out.println(dataDao.getAllLockedApp());
 	}
 	
 }
