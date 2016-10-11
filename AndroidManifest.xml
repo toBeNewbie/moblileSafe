@@ -54,7 +54,7 @@
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="魔法革"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme" android:name="CatchErrorApplication">
         <uses-library android:name="android.test.runner" />
 
         <activity

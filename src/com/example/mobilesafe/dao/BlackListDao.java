@@ -29,6 +29,10 @@ public class BlackListDao {
 		mBlackListDB = new BlackListDB(context);
 	}
 	
+	public BlackListDao(){
+		
+	}
+	
 	
 	//添加黑名单数据对象整体信息。
 	public void add(BlcakListBean listBean){

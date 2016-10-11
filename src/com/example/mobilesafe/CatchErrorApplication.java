@@ -38,6 +38,7 @@ public class CatchErrorApplication extends Application {
 				Field[] declaredFields = type.getDeclaredFields();
 				for (Field field : declaredFields) {
 					try {
+						
 						 Object values = field.get(null);
 						 mess.append(field.getName()+":"+values+"\n");
 						 
@@ -51,7 +52,7 @@ public class CatchErrorApplication extends Application {
 				}
 				//捕获任何线程抛出的异常，错误信息保存到sd卡中
 				mess.append(ex.toString());
-				writeExceptionToFile(mess.toString(), new File("/sdcard/error.txt"));
+				writeExceptionToFile(mess.toString(), new File("/sdcard/mobilesafe_error.txt"));
 				
 				//重启程序，进入主界面
 				Intent forPackageIntent = getPackageManager().getLaunchIntentForPackage(getPackageName());
@@ -70,13 +71,15 @@ public class CatchErrorApplication extends Application {
 	 */
 	private void writeExceptionToFile(String mess,File file){
 		try {
+			
 			PrintWriter mPrintWriter=new PrintWriter(file);
 			mPrintWriter.write(mess);
+			
 			//刷新缓存，到硬盘
 			mPrintWriter.flush();
 			mPrintWriter.close();
+			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
