@@ -17,6 +17,7 @@ import android.os.IBinder;
 import android.telephony.SmsMessage;
 import android.util.Log;
 
+import com.example.mobilesafe.R;
 import com.example.mobilesafe.receiver.MyDeviceAdminReceiver;
 import com.example.mobilesafe.spUtils.myConstantValue;
 import com.example.mobilesafe.spUtils.splashUtils;
@@ -65,7 +66,7 @@ public class AntiThrefService extends Service {
 					//播放报警音乐。
 					if (!isPlaying) {
 						
-						MediaPlayer player=MediaPlayer.create(getApplicationContext(), com.example.mobilesafe.R.raw.confession);
+						MediaPlayer player=MediaPlayer.create(getApplicationContext(), R.raw.confession);
 						player.setVolume(1.0f, 1.0f);
 						player.setLooping(true);
 						player.start();
@@ -77,21 +78,19 @@ public class AntiThrefService extends Service {
 								isPlaying=false;
 							}
 						});
+						player.start();
 						isPlaying=true;
 					}
 					abortBroadcast();
 				}else if (messageBody.equals("#*lockscreen*#")) {
 					mDPM.resetPassword("110", 0);
 					mDPM.lockNow();
-					Log.d("message", "远程锁屏");
 					abortBroadcast();
 				}else if (messageBody.equals("#*wipedata*#")) {
 					mDPM.wipeData(DevicePolicyManager.WIPE_EXTERNAL_STORAGE);
-					Log.d("message", "清除数据");
 					abortBroadcast();
 				}else if (messageBody.equals("#*gps*#")) {
 					getLocationMessage();
-					Log.d("message", "定位信息");
 					abortBroadcast();
 
 				}

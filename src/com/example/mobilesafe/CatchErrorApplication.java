@@ -43,10 +43,8 @@ public class CatchErrorApplication extends Application {
 						 mess.append(field.getName()+":"+values+"\n");
 						 
 					} catch (IllegalArgumentException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} catch (IllegalAccessException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -87,13 +85,11 @@ public class CatchErrorApplication extends Application {
 	
 	@Override
 	public void onTerminate() {
-		// TODO Auto-generated method stub
 		super.onTerminate();
 	}
 
 	@Override
 	public void onLowMemory() {
-		// TODO Auto-generated method stub
 		super.onLowMemory();
 	}
 
